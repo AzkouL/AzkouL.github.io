@@ -6,11 +6,10 @@
 }
 
 body {
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #f4f4f9;
     color: #2c3e50;
     line-height: 1.6;
-    direction: rtl;
 }
 
 .container {
@@ -80,13 +79,6 @@ ul li:last-child {
 section p {
     font-size: 1.2em;
     margin-bottom: 10px;
-}
-
-footer {
-    text-align: center;
-    padding: 20px 0;
-    font-size: 0.9em;
-    color: #7f8c8d;
 }
 
 /* Responsive design */
