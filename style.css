@@ -104,7 +104,12 @@ section p {
 .job p {
     margin-bottom: 5px;
 }
-
+.date {
+    font-size: 1em;
+    color: #7f8c8d;
+    margin-bottom: 10px;
+    display: block;
+}
 /* Responsive design */
 @media (max-width: 600px) {
     .container {
