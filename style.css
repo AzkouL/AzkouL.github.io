@@ -232,3 +232,7 @@ body.dark-mode .work-experience {
 body.dark-mode .job p {
     color: #e0e0e0; /* Job descriptions stay lighter */
 }
+.contact-info i {
+    margin-right: 8px;
+    color: #4CAF50; /* Same color as links for consistency */
+}
