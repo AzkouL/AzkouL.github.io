@@ -167,7 +167,7 @@ body {
     font-family: 'Helvetica Neue', sans-serif;
     background-color: #e0e0e0;
     color: #333;
-    padding: 40px;
+    padding: 15px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
