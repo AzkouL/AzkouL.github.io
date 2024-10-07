@@ -1,238 +1,281 @@
 /* General Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
 }
-
 /* Body Styling */
 body {
-    font-family: 'Helvetica Neue', sans-serif;
-    background-color: #e0e0e0;
-    padding: 40px;
-    color: #333;
+font-family: 'Helvetica Neue', sans-serif;
+background-color: #e0e0e0;
+padding: 40px;
+color: #333;
 }
-
 /* Container */
 .container {
-    max-width: 900px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+max-width: 900px;
+margin: 0 auto;
+background-color: #fff;
+padding: 5px;
+border-radius: 12px;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
-
 /* Profile Section */
 .profile {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+display: flex;
+align-items: center;
+border-bottom: 1px solid #ccc;
+padding-bottom: 20px;
+margin-bottom: 20px;
 }
-
 .profile-pic {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 30px;
-    border: 3px solid #1e90ff;
+width: 130px;
+height: 130px;
+border-radius: 50%;
+object-fit: cover;
+margin-right: 30px;
+border: 3px solid #1e90ff;
 }
-
 .contact-info h1 {
-    font-size: 2em;
-    color: #1e90ff;
-    margin-bottom: 10px;
+font-size: 2em;
+color: #1e90ff;
+margin-bottom: 10px;
 }
-
 .contact-info p {
-    font-size: 1.2em;
-    color: #555;
+font-size: 1.2em;
+color: #555;
 }
-
 .contact-info a {
-    color: #1e90ff;
-    text-decoration: none;
+color: #1e90ff;
+text-decoration: none;
 }
-
 .contact-info a:hover {
-    text-decoration: underline;
+text-decoration: underline;
 }
-
+.Personal-details h1 {
+font-size: 2em;
+color: #1e90ff;
+margin-bottom: 10px;
+}
+.Personal-details p {
+font-size: 1.2em;
+color: #555;
+}
+.Personal-details a {
+color: #1e90ff;
+text-decoration: none;
+}
+.Personal-details a:hover {
+text-decoration: underline;
+}
 /* Section Titles */
 h2 {
-    font-size: 1.8em;
-    color: #1e90ff;
-    margin-bottom: 15px;
-    border-left: 5px solid #1e90ff;
-    padding-left: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+font-size: 1.8em;
+color: #1e90ff;
+margin-bottom: 15px;
+border-left: 5px solid #1e90ff;
+padding-left: 10px;
+text-transform: uppercase;
+letter-spacing: 1px;
 }
-
 /* Lists */
 ul {
-    list-style-type: square;
-    padding-left: 20px;
+list-style-type: square;
+padding-left: 20px;
 }
-
 ul li {
-    margin-bottom: 10px;
-    font-size: 1.1em;
-    color: #444;
+margin-bottom: 10px;
+font-size: 1.1em;
+color: #444;
 }
-
 /* Job and Section Styling */
 .job {
-    margin-bottom: 25px;
+margin-bottom: 25px;
 }
-
 .job p {
-    font-size: 1.1em;
+font-size: 1.1em;
 }
-
 .date {
-    display: block;
-    font-style: italic;
-    color: #888;
-    margin-bottom: 8px;
+display: block;
+font-style: italic;
+color: #888;
+margin-bottom: 8px;
 }
-
 /* Objective Section */
 p {
-    line-height: 1.8;
-    color: #444;
-    margin-bottom: 15px;
+line-height: 1.8;
+color: #444;
+margin-bottom: 15px;
 }
-
 /* Links Styling */
 a {
-    color: #1e90ff;
+color: #1e90ff;
 }
-
 a:hover {
-    text-decoration: underline;
+text-decoration: underline;
 }
-
 /* Responsive Profile Layout for Mobile */
 @media (max-width: 600px) {
-    .profile {
-        flex-direction: column;
-        text-align: center;
-        padding-bottom: 30px;
-    }
-
-    .profile-pic {
-        margin: 0 auto 15px;
-    }
+.profile {
+flex-direction: column;
+text-align: center;
+padding-bottom: 30px;
 }
-
+.profile-pic {
+margin: 0 auto 15px;
+}
+.contact-info p{
+text-align: left;
+}
+}
 /* Bottom Border for Sections */
 section {
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
+padding-bottom: 20px;
+margin-bottom: 20px;
+border-bottom: 1px solid #eee;
 }
-
 /* Last Section Border Removal */
 section:last-of-type {
-    border-bottom: none;
-    margin-bottom: 0;
+border-bottom: none;
+margin-bottom: 0;
 }
-
 /* Dark Mode Button Styling */
 .toggle-container {
-    text-align: right;
-    margin-bottom: 20px;
+text-align: right;
+margin-bottom: 20px;
 }
-
 #dark-mode-toggle {
-    background-color: #1e90ff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
+background-color: #1e90ff;
+color: white;
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+cursor: pointer;
+font-size: 1em;
 }
-
 #dark-mode-toggle:hover {
-    background-color: #155a8a;
+background-color: #155a8a;
 }
-
 /* Body Styling */
 body {
-    font-family: 'Helvetica Neue', sans-serif;
-    background-color: #e0e0e0;
-    color: #333;
-    padding: 15px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+font-family: 'Helvetica Neue', sans-serif;
+background-color: #e0e0e0;
+color: #333;
+padding: 15px;
+transition: background-color 0.3s ease, color 0.3s ease;
 }
-
 /* Dark Mode Styles */
 body.dark-mode {
-    background-color: #121212; /* Darker background */
-    color: #e0e0e0; /* Lighter text */
+background-color: #121212; /* Darker background */
+color: #e0e0e0; /* Lighter text */
 }
-
 /* Dark Mode for Container */
 body.dark-mode .container {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
+background-color: #1e1e1e;
+color: #e0e0e0;
 }
-
 /* Dark Mode for Links */
 body.dark-mode a {
-    color: #4CAF50; /* Soft green for links */
+color: #4CAF50; /* Soft green for links */
 }
-
 body.dark-mode a:hover {
-    color: #76ff03; /* Brighter green on hover */
+color: #76ff03; /* Brighter green on hover */
 }
-
-
 /* Dark Mode for Section Titles */
 body.dark-mode h2 {
-    color: #76ff03;
-    border-left: 5px solid #4CAF50;
+color: #76ff03;
+border-left: 5px solid #4CAF50;
 }
-
 /* Dark Mode for Profile Picture Border */
 body.dark-mode .profile-pic {
-    border-color: #76ff03;
+border-color: #76ff03;
 }
-
 /* Dark Mode for Other Elements (Dates, Jobs, etc.) */
 body.dark-mode .date {
-    color: #bbbbbb;
+color: #bbbbbb;
 }
-
 /* Improving Text Visibility for Sections (Languages, Objective, etc.) */
 body.dark-mode p,
 body.dark-mode ul li {
-    color: #f0f0f0; /* Brighter text for sections like Languages, Objective, etc. */
+color: #f0f0f0; /* Brighter text for sections like Languages, Objective, etc. */
 }
-
 /* Dark Mode for Languages Section */
 body.dark-mode .languages {
-    color: #f0f0f0; /* Ensuring language section text is bright and clear */
+color: #f0f0f0; /* Ensuring language section text is bright and clear */
 }
-
 /* Dark Mode for Skills, Objective, and Other Sections */
 body.dark-mode .skills,
 body.dark-mode .objective,
 body.dark-mode .education,
 body.dark-mode .work-experience {
-    color: #f0f0f0; /* Brighter text for these sections */
+color: #f0f0f0; /* Brighter text for these sections */
 }
-
 /* Dark Mode for Job Titles and Description */
 body.dark-mode .job p {
-    color: #e0e0e0; /* Job descriptions stay lighter */
+color: #e0e0e0; /* Job descriptions stay lighter */
 }
 .contact-info i {
-    margin-right: 8px;
-    color: #4CAF50; /* Same color as links for consistency */
+margin-right: 8px;
+color: #4CAF50; /* Same color as links for consistency */
+}
+.Personal-details i {
+margin-right: 8px;
+color: #4CAF50; /* Same color as links for consistency */
+}
+.progress-bar {
+width: 100%;
+background-color: #e0e0e0;
+border-radius: 10px;
+overflow: hidden;
+}
+.progress {
+height: 10px;
+background-color: #4CAF50;
+}
+.timeline {
+position: relative;
+margin: 20px 0;
+}
+.timeline-item {
+position: relative;
+padding-left: 40px;
+margin-bottom: 20px;
+}
+.timeline-date {
+position: absolute;
+left: 0;
+font-weight: bold;
+color: #4CAF50;
+}
+.timeline-content h3 {
+margin-bottom: 5px;
+}
+.timeline-item::before {
+content: '';
+position: absolute;
+left: 10px;
+top: 0;
+height: 100%;
+width: 2px;
+background-color: #4CAF50;
+}
+a:hover {
+color: #76ff03;
+text-decoration: underline;
+transition: color 0.3s, text-decoration 0.3s;
+}
+button:hover {
+background-color: #76ff03;
+transform: scale(1.05);
+transition: background-color 0.3s, transform 0.3s;
+}
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+h2 {
+animation: fadeIn 1s ease-in;
+}
+h1 {
+animation: fadeIn 1s ease-in;
 }
