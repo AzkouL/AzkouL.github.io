@@ -91,12 +91,14 @@ body {
     justify-content: center;
     gap: 8px;
     box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+    text-decoration: none;
 }
 
 .download-btn:hover {
     background-color: #45a049;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    color: white;
 }
 
 .download-btn:active {
@@ -105,19 +107,6 @@ body {
 
 .download-btn i {
     font-size: 1.1em;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.fa-spin {
-    animation: spin 1s linear infinite;
 }
 
 .dark-mode-toggle {
