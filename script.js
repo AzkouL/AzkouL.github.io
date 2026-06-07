@@ -3,7 +3,6 @@
 // ========================
 
 const toggleButton = document.getElementById('dark-mode-toggle');
-const downloadButton = document.getElementById('download-pdf');
 const body = document.body;
 
 /**
@@ -90,61 +89,6 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
 document.addEventListener('DOMContentLoaded', () => {
     initializeDarkMode();
     checkSystemPreference();
-});
-
-// ========================
-// PDF Download Functionality
-// ========================
-
-/**
- * Generate and download CV as PDF
- * Uses html2pdf library to convert the page content to PDF
- */
-downloadButton.addEventListener('click', () => {
-    // Disable button during download
-    downloadButton.disabled = true;
-    const originalText = downloadButton.innerHTML;
-    downloadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-    
-    // Get the main content
-    const element = document.querySelector('.main-content');
-    
-    // Configure PDF options
-    const options = {
-        margin: [10, 10, 10, 10],
-        filename: 'Hesham-Azkoul-CV.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, allowTaint: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-    };
-    
-    // Generate PDF
-    html2pdf()
-        .set(options)
-        .from(element)
-        .save()
-        .then(() => {
-            // Re-enable button after download
-            downloadButton.disabled = false;
-            downloadButton.innerHTML = originalText;
-        })
-        .catch((error) => {
-            console.error('PDF generation error:', error);
-            downloadButton.disabled = false;
-            downloadButton.innerHTML = originalText;
-            alert('Error generating PDF. Please try again.');
-        });
-});
-
-/**
- * Make download button keyboard accessible
- */
-downloadButton.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        downloadButton.click();
-    }
 });
 
 // ========================
