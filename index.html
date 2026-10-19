@@ -1,8 +1,4 @@
-from pathlib import Path
-
-output_path = Path("/mnt/data/hesham-portfolio-redesigned.html")
-
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -106,7 +102,7 @@ html = r'''<!DOCTYPE html>
     .job li { margin: 7px 0; }
     .job p { color: var(--muted); margin: 10px 0; }
     .tagline { display: inline-block; margin-top: 10px; padding: 5px 9px; border-radius: 8px; background: var(--surface-2); color: var(--muted); font-size: .83rem; }
-    .recognitions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .recognitions { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
     .recognition { border-top: 3px solid var(--accent); }
     .recognition .when { color: var(--accent-2); font-weight: 800; font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; }
     .recognition h3 { margin-top: 8px; }
@@ -168,7 +164,7 @@ html = r'''<!DOCTYPE html>
         <div class="stat"><strong>95%</strong><span>Customer satisfaction at Blackwell’s</span></div>
         <div class="stat"><strong>Top 5</strong><span>Agent ranking from the first month</span></div>
         <div class="stat"><strong>17</strong><span>Team members supported during temporary TL assignment</span></div>
-        <div class="stat"><strong>3</strong><span>Recognitions at Sutherland</span></div>
+        <div class="stat"><strong>4</strong><span>Recognitions at Sutherland</span></div>
       </section>
 
       <section class="section" id="profile">
@@ -226,6 +222,7 @@ html = r'''<!DOCTYPE html>
         <div class="recognitions">
           <article class="card recognition"><div class="when">March 2026</div><h3>Certificate of Appreciation</h3><p>Recognition received during my time at Sutherland.</p></article>
           <article class="card recognition"><div class="when">May 2026</div><h3>Certificate of Appreciation</h3><p>Recognized for exceptional performance, contributions, and supporting the team in achieving its target while in a temporary leadership role.</p></article>
+          <article class="card recognition"><div class="when">May 2026</div><h3>Best Team Leader — Pulse Survey</h3><p>Recognized as the Best Team Leader through the employee pulse survey and received a gift from Sutherland in recognition of this achievement.</p></article>
           <article class="card recognition"><div class="when">July 2026</div><h3>Top SME — UK/IE</h3><p>Recognized as a Top SME while supporting the operation in a temporary Team Leader capacity.</p></article>
         </div>
       </section>
@@ -386,8 +383,3 @@ html = r'''<!DOCTYPE html>
   </script>
 </body>
 </html>
-'''
-
-output_path.write_text(html, encoding="utf-8")
-print(f"Created redesigned standalone portfolio HTML: {output_path}")
-print(f"File size: {output_path.stat().st_size:,} bytes")
