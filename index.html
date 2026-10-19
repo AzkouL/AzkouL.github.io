@@ -1,904 +1,393 @@
-<!DOCTYPE html>
+from pathlib import Path
+
+output_path = Path("/mnt/data/hesham-portfolio-redesigned.html")
+
+html = r'''<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hesham Muhammed Abd El-Latif - Professional CV showcasing expertise in customer service operations, web development, and leadership">
-    <meta name="keywords" content="Hesham Muhammed Abd El-Latif, CV, Customer Service, Operations, Web Development, Leadership, Team Leader, Egypt, Alexandria">
-    <title>Hesham Muhammed Abd El-Latif - Professional CV</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hesham Muhammed Abd El-Latif — Customer Service, Operations, Team Leadership, and Web Development portfolio.">
+  <meta name="keywords" content="Hesham Muhammed Abd El-Latif, customer service, team leader, operations, coaching, KPI, WordPress, Alexandria, Egypt">
+  <meta name="theme-color" content="#101827">
+  <title>Hesham Muhammed Abd El-Latif | Professional Portfolio</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-2: #eef3f9;
+      --text: #172033;
+      --muted: #58657a;
+      --line: #dce4ef;
+      --accent: #2563eb;
+      --accent-2: #0f766e;
+      --chip: #e7efff;
+      --shadow: 0 16px 45px rgba(23, 32, 51, .08);
+    }
+    body.dark {
+      --bg: #0b1220;
+      --surface: #111c2e;
+      --surface-2: #17253a;
+      --text: #edf3fc;
+      --muted: #b1bfd3;
+      --line: #2b3a50;
+      --accent: #8db5ff;
+      --accent-2: #5eead4;
+      --chip: #1c3154;
+      --shadow: 0 16px 45px rgba(0, 0, 0, .22);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      transition: background .2s ease, color .2s ease;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      padding: 22px 0;
+    }
+    .brand { color: var(--text); font-weight: 800; letter-spacing: -.03em; }
+    .top-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 15px; border: 1px solid var(--line); border-radius: 12px;
+      background: var(--surface); color: var(--text); font-weight: 700; cursor: pointer;
+    }
+    .button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    body.dark .button.primary { color: #0b1220; }
+    .hero {
+      position: relative; overflow: hidden; padding: clamp(28px, 6vw, 66px);
+      border-radius: 28px; color: #fff;
+      background: radial-gradient(circle at 85% 10%, rgba(94,234,212,.25), transparent 28%),
+                  linear-gradient(135deg, #101827 0%, #1d3761 60%, #234d70 100%);
+      box-shadow: var(--shadow);
+    }
+    .hero:after {
+      content: ""; position: absolute; width: 270px; height: 270px; right: -80px; bottom: -150px;
+      border: 1px solid rgba(255,255,255,.22); border-radius: 50%;
+      box-shadow: 0 0 0 30px rgba(255,255,255,.035), 0 0 0 65px rgba(255,255,255,.025);
+    }
+    .eyebrow { color: #9ee9df; text-transform: uppercase; font-size: .78rem; letter-spacing: .16em; font-weight: 800; }
+    h1 { margin: 10px 0 12px; max-width: 780px; font-size: clamp(2.15rem, 5vw, 4.1rem); line-height: 1.08; letter-spacing: -.045em; }
+    .hero p { max-width: 760px; color: #e0e9f7; font-size: 1.08rem; margin: 0; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 24px; color: #e0e9f7; font-size: .94rem; }
+    .hero-meta span { display: inline-flex; gap: 8px; align-items: center; }
+    .hero-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .hero .button { background: rgba(255,255,255,.1); color: white; border-color: rgba(255,255,255,.25); }
+    .hero .button.primary { background: #9ee9df; border-color: #9ee9df; color: #102033; }
+    main { padding: 28px 0 60px; }
+    .quick-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 22px 0 38px; }
+    .stat { padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); }
+    .stat strong { display: block; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.2; letter-spacing: -.04em; }
+    .stat span { color: var(--muted); font-size: .88rem; }
+    .section { margin-top: 38px; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 17px; }
+    h2 { margin: 0; font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -.035em; }
+    .section-note { color: var(--muted); margin: 5px 0 0; }
+    .grid-2 { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 24px; box-shadow: var(--shadow); }
+    .card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+    .card p { margin: 8px 0; color: var(--muted); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .chip { padding: 6px 10px; background: var(--chip); color: var(--text); border-radius: 999px; font-size: .86rem; font-weight: 650; }
+    .timeline { display: grid; gap: 16px; }
+    .job { padding: 24px; border: 1px solid var(--line); background: var(--surface); border-radius: 20px; box-shadow: var(--shadow); }
+    .job-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; }
+    .job h3 { margin: 0; font-size: 1.17rem; }
+    .company { color: var(--accent); font-weight: 750; margin-top: 3px; }
+    .date { flex-shrink: 0; color: var(--muted); font-size: .9rem; font-weight: 650; }
+    .job ul { padding-left: 20px; margin: 14px 0 0; }
+    .job li { margin: 7px 0; }
+    .job p { color: var(--muted); margin: 10px 0; }
+    .tagline { display: inline-block; margin-top: 10px; padding: 5px 9px; border-radius: 8px; background: var(--surface-2); color: var(--muted); font-size: .83rem; }
+    .recognitions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .recognition { border-top: 3px solid var(--accent); }
+    .recognition .when { color: var(--accent-2); font-weight: 800; font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; }
+    .recognition h3 { margin-top: 8px; }
+    .two-col-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0; list-style: none; }
+    .two-col-list li { padding: 12px 14px; border-radius: 12px; background: var(--surface-2); }
+    .project-link { display: inline-block; margin: 4px 8px 4px 0; }
+    footer { border-top: 1px solid var(--line); padding: 24px 0 34px; color: var(--muted); font-size: .9rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    @media (max-width: 760px) {
+      .quick-stats { grid-template-columns: repeat(2, 1fr); }
+      .grid-2, .recognitions { grid-template-columns: 1fr; }
+      .job-head { display: block; }
+      .date { display: block; margin-top: 7px; }
+      .two-col-list { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; }
+    }
+    @media print {
+      :root { --bg: #fff; --surface: #fff; --surface-2: #f4f6f8; --text: #111; --muted: #444; --line: #ddd; --accent: #174ea6; --accent-2: #08776d; --chip: #eef3ff; }
+      body { background: #fff; font-size: 10.5pt; }
+      .topbar, .top-actions, .hero-links, .no-print { display: none !important; }
+      .wrap { width: 100%; }
+      .hero { padding: 25px; box-shadow: none; print-color-adjust: exact; }
+      .card, .job, .stat { box-shadow: none; break-inside: avoid; }
+      .section { margin-top: 22px; }
+      a { color: inherit; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="wrap">
+    <nav class="topbar" aria-label="Main navigation">
+      <a class="brand" href="#top">HES​​HAM AZKOUL</a>
+      <div class="top-actions">
+        <a class="button" href="#experience">Experience</a>
+        <a class="button" href="#skills">Skills</a>
+        <button class="button" id="theme-toggle" type="button" aria-label="Toggle dark mode">☾ Theme</button>
+        <button class="button primary" type="button" onclick="window.print()">Print / Save PDF</button>
+      </div>
+    </nav>
 
-    <div class="container">
+    <header class="hero" id="top">
+      <div class="eyebrow">Professional Portfolio · Alexandria, Egypt</div>
+      <h1>Hesham Muhammed<br>Abd El-Latif</h1>
+      <p>Customer Service & Operations professional with experience in international customer support, team coaching, performance management, and web development. I focus on understanding problems, supporting people, and turning performance expectations into practical action.</p>
+      <div class="hero-meta">
+        <span>⌖ Alexandria, Egypt</span>
+        <span>✉ <a href="mailto:heshamazkoul@gmail.com" style="color:inherit">heshamazkoul@gmail.com</a></span>
+        <span>☎ <a href="tel:+201098559170" style="color:inherit">+20 109 855 9170</a></span>
+      </div>
+      <div class="hero-links">
+        <a class="button primary" href="Hesham-Azkoul-CV.pdf" download>↓ Download CV</a>
+        <a class="button" href="https://www.linkedin.com/in/hesham-azkoul-324221243/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a class="button" href="https://azkoul.github.io/" target="_blank" rel="noopener noreferrer">Portfolio URL ↗</a>
+      </div>
+    </header>
 
-        <!-- Header with Dark Mode Toggle and Download Button -->
-        <header class="header">
-            <div class="header-buttons">
+    <main>
+      <section class="quick-stats" aria-label="Career highlights">
+        <div class="stat"><strong>95%</strong><span>Customer satisfaction at Blackwell’s</span></div>
+        <div class="stat"><strong>Top 5</strong><span>Agent ranking from the first month</span></div>
+        <div class="stat"><strong>17</strong><span>Team members supported during temporary TL assignment</span></div>
+        <div class="stat"><strong>3</strong><span>Recognitions at Sutherland</span></div>
+      </section>
 
-                <a href="Hesham-Azkoul-CV.pdf"
-                   download
-                   class="download-btn"
-                   title="Download CV as PDF">
-                    <i class="fas fa-download"></i> Download PDF
-                </a>
-
-                <button id="dark-mode-toggle"
-                        class="dark-mode-toggle"
-                        title="Toggle dark mode">
-                    🌙
-                </button>
-
+      <section class="section" id="profile">
+        <div class="section-heading"><div><h2>Professional Summary</h2><p class="section-note">Customer experience, operational performance, and people development.</p></div></div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>About me</h3>
+            <p>I joined Sutherland Global in November 2025 as a Customer Service Representative. From March through August 2026, I took on a temporary Team Leader assignment supporting the UK Digital operation across Chat, MCO, and SMS.</p>
+            <p>That assignment strengthened my experience in KPI monitoring, adherence, root cause analysis, coaching, action plans, quality follow-up, escalations, and coordination with QA, WFM/RTA, HR, Sales, and other stakeholders.</p>
+            <p>My approach is supportive but accountable: understand the root cause, agree on clear next steps, and follow up to help people improve while maintaining the required standards.</p>
+          </article>
+          <article class="card">
+            <h3>Core strengths</h3>
+            <div class="chips">
+              <span class="chip">Customer Experience</span><span class="chip">Team Coaching</span>
+              <span class="chip">KPI Monitoring</span><span class="chip">Root Cause Analysis</span>
+              <span class="chip">Action Plans</span><span class="chip">Escalation Handling</span>
+              <span class="chip">Stakeholder Coordination</span><span class="chip">Problem Solving</span>
+              <span class="chip">Quality & Compliance</span><span class="chip">Technical Troubleshooting</span>
+              <span class="chip">WordPress</span><span class="chip">Community Support</span>
             </div>
-        </header>
-
-
-        <!-- Main Content -->
-        <main class="main-content">
-
-
-            <!-- Profile Section -->
-            <section class="profile-section">
-
-                <div class="profile-container">
-
-                    <img src="profile.jpg"
-                         alt="Hesham Muhammed Abd El-Latif"
-                         class="profile-image">
-
-                    <div class="profile-info">
-
-                        <h1 class="name">
-                            Hesham Muhammed Abd El-Latif
-                        </h1>
-
-                        <div class="contact-details">
-
-                            <p>
-                                <i class="fas fa-map-marker-alt"></i>
-                                El-Hadara El-Gdeda, Bab Sharq, 21516, Alexandria, Egypt
-                            </p>
-
-                            <p>
-                                <i class="fas fa-phone"></i>
-                                <a href="tel:+201098559170">
-                                    +201098559170
-                                </a>
-                            </p>
-
-                            <p>
-                                <i class="fas fa-envelope"></i>
-                                <a href="mailto:heshamazkoul@gmail.com">
-                                    heshamazkoul@gmail.com
-                                </a>
-                            </p>
-
-                            <p>
-                                <i class="fab fa-linkedin"></i>
-                                <a href="https://www.linkedin.com/in/hesham-azkoul-324221243/"
-                                   target="_blank">
-                                    linkedin.com/in/hesham-azkoul
-                                </a>
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- Personal Information -->
-            <section class="personal-info-section">
-
-                <h2>Personal Information</h2>
-
-                <div class="info-grid">
-
-                    <div class="info-item">
-
-                        <span class="info-label">
-                            <i class="fas fa-calendar-alt"></i>
-                            Date of Birth
-                        </span>
-
-                        <span class="info-value">
-                            22/3/1997
-                        </span>
-
-                    </div>
-
-
-                    <div class="info-item">
-
-                        <span class="info-label">
-                            <i class="fas fa-ring"></i>
-                            Marital Status
-                        </span>
-
-                        <span class="info-value">
-                            Married
-                        </span>
-
-                    </div>
-
-
-                    <div class="info-item">
-
-                        <span class="info-label">
-                            <i class="fas fa-flag"></i>
-                            Nationality
-                        </span>
-
-                        <span class="info-value">
-                            Egyptian
-                        </span>
-
-                    </div>
-
-
-                    <div class="info-item">
-
-                        <span class="info-label">
-                            <i class="fas fa-check-circle"></i>
-                            Military Status
-                        </span>
-
-                        <span class="info-value">
-                            Fulfilled (7/2023 - 9/2024)
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- Profile Statement -->
-            <section class="profile-statement-section">
-
-                <h2>Profile</h2>
-
-                <p>
-                    Customer Service and Operations professional with experience supporting
-                    international accounts in fast-paced, target-driven environments.
-                    Currently employed as a Customer Service Representative at Sutherland Global,
-                    with a temporary Team Leader assignment since March 2026 supporting a
-                    17-person UK Digital operation across Chat, MCO, and SMS.
-                </p>
-
-                <p>
-                    Experienced in performance management, KPI monitoring, quality assurance,
-                    coaching, employee support, escalation handling, workforce coordination,
-                    and cross-functional communication. Provide practical guidance to team
-                    members while working closely with management, QA, WFM/RTA, HR, IT,
-                    Sales, and client-side stakeholders to maintain service quality and
-                    operational performance.
-                </p>
-
-                <p>
-                    Consistently recognized for strong customer service performance,
-                    problem-solving, technical troubleshooting, communication, and team support.
-                    Previously ranked among the Top 5 agents at Blackwell's Online while
-                    maintaining a 95% customer satisfaction rating.
-                </p>
-
-            </section>
-
-
-            <!-- Education -->
-            <section class="education-section">
-
-                <h2>Education</h2>
-
-                <div class="education-item">
-
-                    <div class="degree-header">
-
-                        <h3>
-                            Bachelor's Degree in Information Technology
-                        </h3>
-
-                        <span class="year">
-                            2022
-                        </span>
-
-                    </div>
-
-                    <p class="institution">
-                        Aboukir High Institutes for Information and Computer Science (HICIS)
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- Experience -->
-            <section class="experience-section">
-
-                <h2>Experience</h2>
-
-
-                <!-- Sutherland Global -->
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <h3>
-                            Customer Service Representative |
-                            Temporary Team Leader Assignment
-                        </h3>
-
-                        <span class="company">
-                            Sutherland Global
-                        </span>
-
-                    </div>
-
-                    <span class="date-range">
-                        <i class="fas fa-calendar"></i>
-                        November 2024 - Present
-                    </span>
-
-
-                    <!-- Leadership Assignment -->
-                    <p>
-                        Joined Sutherland Global as a Customer Service Representative
-                        in November 2024 and was trusted with a temporary Team Leader
-                        assignment in March 2026, supporting day-to-day operations and
-                        people management across a 17-person UK Digital operation.
-                    </p>
-
-
-                    <ul class="experience-details">
-
-                        <li>
-                            Oversee 17 team members across the Digital operation:
-                            8 Chat agents, 3 MCO agents, and 5 SMS agents, while also
-                            supporting an SMS agent temporarily assigned to an SME role.
-                        </li>
-
-                        <li>
-                            Monitor team KPIs, adherence, quality, compliance, and
-                            newly introduced performance metrics to ensure account
-                            and company standards are consistently maintained.
-                        </li>
-
-                        <li>
-                            Review bottom-quartile performance daily, validate cases
-                            behind performance results, identify performance gaps,
-                            and provide targeted coaching and follow-up.
-                        </li>
-
-                        <li>
-                            Create and monitor action plans and pre-PIP improvement
-                            plans for employees who remain below target, using daily
-                            follow-ups, side-by-side coaching, random audits, and
-                            performance reviews.
-                        </li>
-
-                        <li>
-                            Coach agents on performance, quality, account and company
-                            policies, communication standards, customer interactions,
-                            process compliance, attendance, and behavioral concerns.
-                        </li>
-
-                        <li>
-                            Conduct team briefings and cascade new management instructions,
-                            policies, metrics, and process changes while helping agents
-                            understand practical ways to achieve new targets.
-                        </li>
-
-                        <li>
-                            Act as a communication link between frontline employees
-                            and management by providing performance updates, collecting
-                            team feedback, raising operational concerns, and following
-                            up on management requests.
-                        </li>
-
-                        <li>
-                            Coordinate with QA, WFM/RTA, HR, IT, Sales, and client-side
-                            stakeholders to resolve operational, technical, scheduling,
-                            quality, and employee-related issues.
-                        </li>
-
-                        <li>
-                            Handle customer escalations and provide real-time support
-                            to agents during difficult customer interactions, including
-                            guidance on appropriate actions, communication, and system
-                            navigation.
-                        </li>
-
-                        <li>
-                            Support employee engagement and retention by addressing
-                            individual concerns, providing positive feedback and
-                            recognition, and maintaining a supportive and productive
-                            team environment.
-                        </li>
-
-                        <li>
-                            Coordinate attendance, scheduling, planned leave, break
-                            allocation, special circumstances, overtime, and cancelled
-                            days off with relevant support teams while ensuring accurate
-                            payroll-related submissions.
-                        </li>
-
-                        <li>
-                            Support unexpected staffing gaps by coordinating available
-                            coverage and, when necessary, providing direct operational
-                            support to help protect service levels.
-                        </li>
-
-                        <li>
-                            Review quality evaluations, identify recurring quality
-                            issues, support evaluation discussions where required,
-                            and coach agents on opportunities for improvement.
-                        </li>
-
-                        <li>
-                            Escalate severe or repeated policy and performance issues
-                            through appropriate management and HR processes after
-                            coaching and corrective action have been provided.
-                        </li>
-
-                        <li>
-                            Support the SMS agent temporarily assigned to an SME role
-                            by reviewing workload, delegating responsibilities,
-                            providing guidance on difficult cases, and using the
-                            SME to support the wider team.
-                        </li>
-
-                    </ul>
-
-
-                    <!-- Achievement -->
-                    <div class="achievement">
-
-                        <h4>
-                            <i class="fas fa-award"></i>
-                            Achievement
-                        </h4>
-
-                        <p>
-                            <strong>
-                                Certificate of Appreciation — May 2026
-                            </strong>
-                        </p>
-
-                        <p>
-                            Awarded a Certificate of Appreciation by Sutherland Global
-                            for exceptional performance, outstanding contributions,
-                            and achieving the team's target while supporting the team
-                            in a temporary leadership role.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Blackwell's Online -->
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <h3>
-                            Customer Service Representative
-                        </h3>
-
-                        <span class="company">
-                            Customer Orb / Blackwell's Online
-                        </span>
-
-                    </div>
-
-                    <span class="date-range">
-                        <i class="fas fa-calendar"></i>
-                        21 October 2024 - 29 October 2025
-                    </span>
-
-                    <ul class="experience-details">
-
-                        <li>
-                            Delivered exceptional customer service by assisting
-                            online customers with inquiries, orders, and issue
-                            resolution, ensuring a high level of customer satisfaction.
-                        </li>
-
-                        <li>
-                            Consistently ranked among the
-                            <strong>Top 5 agents</strong>
-                            since the first month of employment, demonstrating
-                            exceptional performance and dedication.
-                        </li>
-
-                        <li>
-                            Managed high volume of customer interactions daily through
-                            email, live chat, and phone while maintaining professionalism
-                            and efficiency.
-                        </li>
-
-                        <li>
-                            Supported customers with technical troubleshooting related
-                            to the online bookstore platform, improving user experience.
-                        </li>
-
-                        <li>
-                            Achieved
-                            <strong>95% customer satisfaction</strong>
-                            from November 2024 onwards, reflecting a strong commitment
-                            to quality service.
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-                <!-- Real Estate -->
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <h3>
-                            Real Estate Agent
-                        </h3>
-
-                        <span class="company">
-                            Freelance / Self-employed
-                        </span>
-
-                    </div>
-
-                    <span class="date-range">
-                        <i class="fas fa-calendar"></i>
-                        March 2025 - June 2025
-                    </span>
-
-                    <p class="part-time">
-                        Remote
-                    </p>
-
-                    <ul class="experience-details">
-
-                        <li>
-                            Specialized in contacting property owners to negotiate
-                            purchases, ensuring smooth transactions and mutually
-                            beneficial outcomes.
-                        </li>
-
-                        <li>
-                            Successfully generated 2-3 leads daily by leveraging
-                            market research and effective communication strategies.
-                        </li>
-
-                        <li>
-                            Provided detailed information on the buying process,
-                            ensuring transparency and clarity for property owners.
-                        </li>
-
-                        <li>
-                            Stayed updated on market trends and property values to
-                            identify lucrative opportunities and deliver informed
-                            recommendations.
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-                <!-- WordPress Developer -->
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <h3>
-                            WordPress Developer
-                        </h3>
-
-                        <span class="company">
-                            Freelance
-                        </span>
-
-                    </div>
-
-                    <span class="date-range">
-                        <i class="fas fa-calendar"></i>
-                        January 2023 - June 2023
-                    </span>
-
-                    <p class="part-time">
-                        Remote
-                    </p>
-
-                    <p>
-                        Designed and developed websites for clients using WordPress.
-                        Optimized loading times and ensured websites were mobile-friendly.
-                    </p>
-
-                    <p class="projects-label">
-                        Recent Projects:
-                    </p>
-
-                    <ul class="projects-list">
-
-                        <li>
-                            Gardenhub-eg.com
-                        </li>
-
-                        <li>
-                            Albeitalmasrygroup.com
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-                <!-- Cold Caller -->
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <h3>
-                            Cold Caller / Texter
-                        </h3>
-
-                        <span class="company">
-                            Proper Outsource Solutions
-                        </span>
-
-                    </div>
-
-                    <span class="date-range">
-                        <i class="fas fa-calendar"></i>
-                        March 2023 - June 2023
-                    </span>
-
-                    <p>
-                        Responsible for reaching out to potential clients to gauge
-                        interest in selling their property.
-                    </p>
-
-                </div>
-
-
-                <!-- Store Manager -->
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <h3>
-                            Store Manager
-                        </h3>
-
-                        <span class="company">
-                            Ehab Elby Motorcycles
-                        </span>
-
-                    </div>
-
-                    <span class="date-range">
-                        <i class="fas fa-calendar"></i>
-                        February 2022 - February 2023
-                    </span>
-
-                    <p>
-                        Managed store operations, sales, and team performance.
-                    </p>
-
-                </div>
-
-
-                <!-- Frontend Web Developer -->
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <h3>
-                            Frontend Web Developer
-                        </h3>
-
-                        <span class="company">
-                            SMS (Internship)
-                        </span>
-
-                    </div>
-
-                    <span class="date-range">
-                        <i class="fas fa-calendar"></i>
-                        April 2021 - January 2022
-                    </span>
-
-                    <p>
-                        Joined as a front-end web developer intern, worked on multiple
-                        projects, and successfully completed 4 independent website projects.
-                    </p>
-
-                </div>
-
-
-                <!-- Telesales -->
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <h3>
-                            Telesales Representative
-                        </h3>
-
-                        <span class="company">
-                            POS
-                        </span>
-
-                    </div>
-
-                    <span class="date-range">
-                        <i class="fas fa-calendar"></i>
-                        January 2021 - March 2021
-                    </span>
-
-                    <p>
-                        Offered medical devices and braces to seniors in the United States
-                        through telephone sales.
-                    </p>
-
-                </div>
-
-
-                <!-- Search Evaluator -->
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <h3>
-                            Search Evaluator
-                        </h3>
-
-                        <span class="company">
-                            Appen
-                        </span>
-
-                    </div>
-
-                    <span class="date-range">
-                        <i class="fas fa-calendar"></i>
-                        January 2019 - November 2020
-                    </span>
-
-                    <p class="part-time">
-                        Remote
-                    </p>
-
-                    <p>
-                        Analyzed search engine results to ensure accuracy and relevance.
-                    </p>
-
-                </div>
-
-
-                <!-- Map Analyst -->
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <h3>
-                            Map Analyst
-                        </h3>
-
-                        <span class="company">
-                            Appen
-                        </span>
-
-                    </div>
-
-                    <span class="date-range">
-                        <i class="fas fa-calendar"></i>
-                        January 2018 - January 2019
-                    </span>
-
-                    <p class="part-time">
-                        Remote
-                    </p>
-
-                    <p>
-                        Improved content, user relevance, and geographic accuracy
-                        of Apple Maps.
-                    </p>
-
-                </div>
-
-
-                <!-- Discord Community Moderator -->
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <h3>
-                            Discord Community Moderator & Support Agent
-                        </h3>
-
-                        <span class="company">
-                            Games Private Servers (SRO)
-                        </span>
-
-                    </div>
-
-                    <span class="date-range">
-                        <i class="fas fa-calendar"></i>
-                        January 2012 - July 2021
-                    </span>
-
-                    <p class="part-time">
-                        Part-time | Remote
-                    </p>
-
-                    <ul class="experience-details">
-
-                        <li>
-                            Provided support for players on private game servers,
-                            handling technical and gameplay inquiries.
-                        </li>
-
-                        <li>
-                            Provided live support to Arabic and English speakers;
-                            supported Turkish and German users using Google Translate.
-                        </li>
-
-                        <li>
-                            From 2015, managed community support via Discord:
-                            created and organized channels, roles, and bots.
-                        </li>
-
-                        <li>
-                            Led community engagement and helped grow server activity
-                            through in-server events and promotions.
-                        </li>
-
-                        <li>
-                            Collaborated with server admins to implement rules
-                            and marketing strategies.
-                        </li>
-
-                    </ul>
-
-                </div>
-
-            </section>
-
-
-            <!-- Military Service -->
-            <section class="military-service-section">
-
-                <h2>
-                    Military Service
-                </h2>
-
-                <p class="military-summary">
-                    Successfully completed mandatory military service with an excellent
-                    conduct rating, gaining valuable experience in leadership and
-                    operational management within a fast-paced environment.
-                </p>
-
-
-                <div class="military-details">
-
-                    <div class="detail-item">
-
-                        <span class="detail-label">
-                            <i class="fas fa-star"></i>
-                            Rank
-                        </span>
-
-                        <span class="detail-value">
-                            Private
-                        </span>
-
-                    </div>
-
-
-                    <div class="detail-item">
-
-                        <span class="detail-label">
-                            <i class="fas fa-tasks"></i>
-                            Role
-                        </span>
-
-                        <span class="detail-value">
-                            Head of Operations Office
-                        </span>
-
-                    </div>
-
-
-                    <div class="detail-item">
-
-                        <span class="detail-label">
-                            <i class="fas fa-calendar"></i>
-                            Duration
-                        </span>
-
-                        <span class="detail-value">
-                            July 2023 - September 2024
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <h4>
-                    Responsibilities
-                </h4>
-
-                <ul class="military-list">
-
-                    <li>
-                        Coordinated daily operations of the office
-                    </li>
-
-                    <li>
-                        Led a team of soldiers in various tasks,
-                        improving operational efficiency
-                    </li>
-
-                </ul>
-
-
-                <h4>
-                    Skills Developed
-                </h4>
-
-                <ul class="military-list">
-
-                    <li>
-                        Leadership and Team Management
-                    </li>
-
-                    <li>
-                        Strategic Planning
-                    </li>
-
-                    <li>
-                        Problem Solving under Pressure
-                    </li>
-
-                    <li>
-                        Effective Communication
-                    </li>
-
-                    <li>
-                        Adaptability and Resilience
-                    </li>
-
-                </ul>
-
-            </section>
-
-        </main>
-
-
-        <!-- Footer -->
-        <footer class="footer">
-
-            <p>
-                &copy; 2026 Hesham Muhammed Abd El-Latif.
-                All rights reserved.
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="skills">
+        <div class="section-heading"><div><h2>Skills</h2><p class="section-note">Practical skills developed across customer support, operations, and technical projects.</p></div></div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Customer Service & Operations</h3>
+            <ul>
+              <li>Voice, live chat, and email customer support</li>
+              <li>Customer issue resolution, escalation handling, and service recovery</li>
+              <li>Performance and KPI monitoring, adherence, and quality follow-up</li>
+              <li>Root Cause Analysis (RCA), coaching, SMART action plans, and follow-up</li>
+              <li>Team briefings, process updates, and stakeholder coordination</li>
+              <li>Customer retention, rapport building, lead generation, and negotiation</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Technical & Digital</h3>
+            <ul>
+              <li>WordPress website development and WooCommerce</li>
+              <li>Website troubleshooting and basic front-end development</li>
+              <li>Search evaluation and map content quality analysis</li>
+              <li>Discord community moderation, support, channel/role setup, and bots</li>
+              <li>Microsoft Outlook and documentation for day-to-day coordination</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="recognitions">
+        <div class="section-heading"><div><h2>Recognitions</h2><p class="section-note">Recognition received during my time at Sutherland.</p></div></div>
+        <div class="recognitions">
+          <article class="card recognition"><div class="when">March 2026</div><h3>Certificate of Appreciation</h3><p>Recognition received during my time at Sutherland.</p></article>
+          <article class="card recognition"><div class="when">May 2026</div><h3>Certificate of Appreciation</h3><p>Recognized for exceptional performance, contributions, and supporting the team in achieving its target while in a temporary leadership role.</p></article>
+          <article class="card recognition"><div class="when">July 2026</div><h3>Top SME — UK/IE</h3><p>Recognized as a Top SME while supporting the operation in a temporary Team Leader capacity.</p></article>
+        </div>
+      </section>
+
+      <section class="section" id="experience">
+        <div class="section-heading"><div><h2>Professional Experience</h2><p class="section-note">Customer operations, leadership, sales, and technical experience.</p></div></div>
+        <div class="timeline">
+          <article class="job">
+            <div class="job-head"><div><h3>Customer Service Representative</h3><div class="company">Sutherland Global</div></div><div class="date">November 2025 – Present</div></div>
+            <p>Customer service role supporting an international operation. Also selected for a temporary Team Leader assignment from March through the end of August 2026.</p>
+            <ul>
+              <li>Support customers and handle service issues in line with account procedures, quality standards, and performance expectations.</li>
+              <li>Work with operational metrics, customer needs, and escalation processes in a target-driven environment.</li>
+            </ul>
+            <span class="tagline">UK Digital · Customer Operations</span>
+          </article>
+
+          <article class="job">
+            <div class="job-head"><div><h3>Temporary Team Leader Assignment — UK Digital</h3><div class="company">Sutherland Global</div></div><div class="date">March 2026 – August 2026</div></div>
+            <p>Temporary leadership assignment supporting a 17-person UK Digital operation across Chat, MCO, and SMS, including coordination with an SME.</p>
+            <ul>
+              <li>Monitored KPIs, adherence, quality, compliance, and new performance metrics; reviewed bottom-quartile results and validated performance gaps.</li>
+              <li>Conducted coaching and root cause analysis, agreed on improvement actions, and followed up through side-by-side support, audits, and performance reviews.</li>
+              <li>Created and monitored action plans and pre-PIP plans for agents who remained below target, following the relevant process and documentation requirements.</li>
+              <li>Delivered team briefings and cascaded new policies, metrics, process changes, and management instructions.</li>
+              <li>Coordinated with QA, WFM/RTA, HR, IT, Sales, and other stakeholders to address operational, technical, scheduling, and employee-related issues.</li>
+              <li>Supported escalations, urgent management requests, staffing coverage, attendance coordination, and employee engagement.</li>
+              <li>Helped agents understand expectations and improve performance through clear feedback, practical guidance, and consistent follow-up.</li>
+            </ul>
+            <div class="chips"><span class="chip">Performance Management</span><span class="chip">Coaching</span><span class="chip">RCA</span><span class="chip">Action Plans</span><span class="chip">Stakeholder Management</span></div>
+          </article>
+
+          <article class="job">
+            <div class="job-head"><div><h3>Customer Service Representative</h3><div class="company">Customer Orb / Blackwell’s Online</div></div><div class="date">21 October 2024 – 29 October 2025</div></div>
+            <ul>
+              <li>Supported Australian customers through email, live chat, and phone for an online bookstore.</li>
+              <li>Consistently ranked among the <strong>Top 5 agents from the first month</strong>.</li>
+              <li>Maintained <strong>95% customer satisfaction from November 2024 onward</strong>.</li>
+              <li>Handled high-volume interactions, order enquiries, delivery concerns, platform troubleshooting, and customer issue resolution.</li>
+              <li>Worked across multiple live chats while maintaining service quality and response expectations.</li>
+            </ul>
+          </article>
+
+          <article class="job">
+            <div class="job-head"><div><h3>Real Estate Agent</h3><div class="company">Freelance / Self-employed</div></div><div class="date">March 2025 – June 2025 · Remote</div></div>
+            <ul>
+              <li>Generated approximately 2–3 property-owner leads per day through outreach and market research.</li>
+              <li>Discussed property sales, negotiated with owners, and explained the purchasing process.</li>
+              <li>Researched market values and property trends to identify potential opportunities.</li>
+            </ul>
+          </article>
+
+          <article class="job">
+            <div class="job-head"><div><h3>WordPress Developer</h3><div class="company">Freelance</div></div><div class="date">January 2023 – June 2023 · Remote</div></div>
+            <p>Built and maintained client websites using WordPress, with attention to mobile usability and loading performance.</p>
+            <p><strong>Projects:</strong>
+              <a class="project-link" href="https://gardenhub-eg.com/" target="_blank" rel="noopener noreferrer">GardenHub ↗</a>
+              <a class="project-link" href="https://albeitalmasrygroup.com/" target="_blank" rel="noopener noreferrer">Albeit Almasry Group ↗</a>
             </p>
+          </article>
 
-        </footer>
+          <article class="job">
+            <div class="job-head"><div><h3>Cold Caller / Texter</h3><div class="company">Proper Outsource Solutions</div></div><div class="date">March 2023 – June 2023</div></div>
+            <p>Contacted potential property sellers, introduced the opportunity, and assessed their interest in selling.</p>
+          </article>
 
-    </div>
+          <article class="job">
+            <div class="job-head"><div><h3>Store Manager</h3><div class="company">Ehab Elby Motorcycles</div></div><div class="date">February 2022 – February 2023</div></div>
+            <p>Supported store operations, sales activities, and team performance.</p>
+          </article>
 
+          <article class="job">
+            <div class="job-head"><div><h3>Frontend Web Developer Intern</h3><div class="company">SMS</div></div><div class="date">April 2021 – January 2022</div></div>
+            <p>Worked on multiple web projects and completed four independent website projects during the internship.</p>
+          </article>
 
-    <script src="script.js"></script>
+          <article class="job">
+            <div class="job-head"><div><h3>Telesales Representative</h3><div class="company">POS</div></div><div class="date">January 2021 – March 2021</div></div>
+            <p>Sold medical devices and braces to senior customers in the United States over the phone.</p>
+          </article>
 
+          <article class="job">
+            <div class="job-head"><div><h3>Search Evaluator</h3><div class="company">Appen · Remote</div></div><div class="date">January 2019 – November 2020</div></div>
+            <p>Evaluated search engine results for relevance and quality.</p>
+          </article>
+
+          <article class="job">
+            <div class="job-head"><div><h3>Map Analyst</h3><div class="company">Appen · Remote</div></div><div class="date">January 2018 – January 2019</div></div>
+            <p>Reviewed map content and assessed geographic accuracy and user relevance for Apple Maps.</p>
+          </article>
+
+          <article class="job">
+            <div class="job-head"><div><h3>Community Moderator & Support Agent</h3><div class="company">SRO Private Servers · Part-time, Remote</div></div><div class="date">January 2012 – July 2021</div></div>
+            <ul>
+              <li>Supported players with technical and gameplay questions in an online gaming community.</li>
+              <li>Provided support in Arabic and English, with translation tools to assist Turkish- and German-speaking users.</li>
+              <li>Organized Discord channels and roles and helped manage bots from 2015 onward.</li>
+              <li>Supported community engagement through in-server events, promotions, and coordination with administrators.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="education">
+        <div class="section-heading"><div><h2>Education & Military Service</h2><p class="section-note">Academic background and completed national service.</p></div></div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Bachelor’s Degree in Information Technology</h3>
+            <p><strong>Aboukir High Institutes for Information and Computer Science (HICIS)</strong></p>
+            <p>2022</p>
+          </article>
+          <article class="card">
+            <h3>Mandatory Military Service</h3>
+            <p><strong>July 2023 – September 2024</strong> · Private</p>
+            <p>Completed mandatory military service with an excellent conduct rating. Served as Head of Operations Office, coordinating daily office activities and supporting task allocation and team coordination.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="languages">
+        <div class="section-heading"><div><h2>Languages & Work Preferences</h2></div></div>
+        <div class="card">
+          <ul class="two-col-list">
+            <li><strong>Arabic</strong><br><span style="color:var(--muted)">Native</span></li>
+            <li><strong>English</strong><br><span style="color:var(--muted)">Professional working proficiency</span></li>
+            <li><strong>Work style</strong><br><span style="color:var(--muted)">Supportive, accountable, and improvement-focused</span></li>
+            <li><strong>Location</strong><br><span style="color:var(--muted)">Alexandria, Egypt</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="section-heading"><div><h2>Contact</h2><p class="section-note">Open to relevant opportunities in customer service, operations, team leadership, and technical support.</p></div></div>
+        <div class="card">
+          <p><strong>Email:</strong> <a href="mailto:heshamazkoul@gmail.com">heshamazkoul@gmail.com</a></p>
+          <p><strong>Phone:</strong> <a href="tel:+201098559170">+20 109 855 9170</a></p>
+          <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/hesham-azkoul-324221243/" target="_blank" rel="noopener noreferrer">linkedin.com/in/hesham-azkoul</a></p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <span>© <span id="year">2026</span> Hesham Muhammed Abd El-Latif</span>
+        <span>Professional portfolio · Built for clarity and accessibility</span>
+      </div>
+    </footer>
+  </div>
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('hesham-theme');
+    if (savedTheme === 'dark') document.body.classList.add('dark');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('hesham-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
+'''
+
+output_path.write_text(html, encoding="utf-8")
+print(f"Created redesigned standalone portfolio HTML: {output_path}")
+print(f"File size: {output_path.stat().st_size:,} bytes")
