@@ -49,27 +49,74 @@
       padding: 22px 0;
     }
     .brand { color: var(--text); font-weight: 800; letter-spacing: -.03em; }
-    .top-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .top-actions {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      scroll-target-group: auto;
+    }
+    .top-actions a.button:is(:target-current, .target-current) {
+      background: var(--chip);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
     .button {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 10px 15px; border: 1px solid var(--line); border-radius: 12px;
+      padding: 9px 14px; border: 1px solid var(--line); border-radius: 12px;
       background: var(--surface); color: var(--text); font-weight: 700; cursor: pointer;
+      font-size: .92rem;
     }
     .button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
     body.dark .button.primary { color: #0b1220; }
     .hero {
       position: relative; overflow: hidden; padding: clamp(28px, 6vw, 66px);
       border-radius: 28px; color: #fff;
-      background: radial-gradient(circle at 85% 10%, rgba(94,234,212,.25), transparent 28%),
+      background: radial-gradient(550px circle at var(--mouse-x, 85%) var(--mouse-y, 25%), rgba(94,234,212,.3), transparent 60%),
+                  radial-gradient(circle at 85% 10%, rgba(94,234,212,.2), transparent 28%),
                   linear-gradient(135deg, #101827 0%, #1d3761 60%, #234d70 100%);
       box-shadow: var(--shadow);
+      transition: background 0.15s ease;
     }
     .hero:after {
       content: ""; position: absolute; width: 270px; height: 270px; right: -80px; bottom: -150px;
       border: 1px solid rgba(255,255,255,.22); border-radius: 50%;
       box-shadow: 0 0 0 30px rgba(255,255,255,.035), 0 0 0 65px rgba(255,255,255,.025);
     }
+    .hero-top-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 12px; border-radius: 999px;
+      background: rgba(16, 185, 129, 0.14); border: 1px solid rgba(52, 211, 153, 0.4);
+      color: #a7f3d0; font-size: .8rem; font-weight: 650; letter-spacing: .02em;
+    }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #10b981;
+    }
+    @media screen and (prefers-reduced-motion: no-preference) {
+      .status-dot {
+        animation: pulse-dot 2.2s infinite;
+      }
+      @keyframes pulse-dot {
+        0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+        70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+      }
+    }
     .eyebrow { color: #9ee9df; text-transform: uppercase; font-size: .78rem; letter-spacing: .16em; font-weight: 800; }
+    .hero-type-wrap {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; margin-bottom: 4px;
+      padding: 6px 14px; border-radius: 999px;
+      background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.18);
+      font-size: .88rem; color: #9ee9df; font-weight: 650;
+    }
+    .typewriter-cursor {
+      display: inline-block; width: 2px; height: 1.1em; background: #9ee9df;
+      margin-left: 2px; vertical-align: text-bottom;
+      animation: blink-caret .8s step-end infinite;
+    }
+    @keyframes blink-caret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     h1 { margin: 10px 0 12px; max-width: 780px; font-size: clamp(2.15rem, 5vw, 4.1rem); line-height: 1.08; letter-spacing: -.045em; }
     .hero p { max-width: 760px; color: #e0e9f7; font-size: 1.08rem; margin: 0; }
     .hero-meta { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 24px; color: #e0e9f7; font-size: .94rem; }
@@ -77,6 +124,65 @@
     .hero-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
     .hero .button { background: rgba(255,255,255,.1); color: white; border-color: rgba(255,255,255,.25); }
     .hero .button.primary { background: #9ee9df; border-color: #9ee9df; color: #102033; }
+    
+    /* ── Click to copy & toast ── */
+    .copy-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22);
+      color: inherit; border-radius: 6px; padding: 3px 6px; margin-left: 4px;
+      cursor: pointer; vertical-align: middle; transition: background .15s, border-color .15s, transform .1s;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,.24); border-color: rgba(255,255,255,.45); transform: scale(1.08); }
+    .copy-btn:active { transform: scale(0.94); }
+    .card .copy-btn {
+      background: var(--surface-2); border-color: var(--line); color: var(--muted);
+    }
+    .card .copy-btn:hover {
+      background: var(--chip); border-color: var(--accent); color: var(--accent);
+    }
+    .toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(24px);
+      background: #101827; color: #edf3fc; border: 1px solid #2b3a50;
+      padding: 10px 20px; border-radius: 999px;
+      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+      font-size: .88rem; font-weight: 650; z-index: 1000;
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s cubic-bezier(.22,.68,0,1.2), transform .25s cubic-bezier(.22,.68,0,1.2);
+    }
+    body:not(.dark) .toast {
+      background: #172033; color: #fff; border-color: rgba(255,255,255,.1);
+    }
+    .toast.show {
+      opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto;
+    }
+
+    /* ── Back to top floating button ── */
+    .back-to-top {
+      position: fixed; bottom: 26px; right: 26px; z-index: 850;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--surface); color: var(--accent); border: 1px solid var(--line);
+      box-shadow: 0 10px 28px rgba(23, 32, 51, 0.16);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; opacity: 0; visibility: hidden; translate: 0 16px;
+      transition: opacity 0.25s ease, translate 0.25s ease, visibility 0.25s, background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .back-to-top:hover {
+      background: var(--accent); color: #fff; transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.35); text-decoration: none;
+    }
+    .scrolled .back-to-top {
+      opacity: 1; visibility: visible; translate: 0 0;
+    }
+    @container scroll-state(scrollable: top) {
+      .back-to-top { opacity: 1; visibility: visible; translate: 0 0; }
+    }
+    
+    /* ── Keyboard hints ── */
+    kbd {
+      display: inline-block; padding: 2px 5px; font-size: .73rem; font-family: inherit;
+      background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px;
+      box-shadow: 0 1px 0 var(--line); color: var(--muted); vertical-align: middle; line-height: 1;
+    }
     main { padding: 28px 0 60px; }
     .quick-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 22px 0 38px; }
     .stat { padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); }
@@ -92,8 +198,28 @@
     .card p { margin: 8px 0; color: var(--muted); }
     .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
     .chip { padding: 6px 10px; background: var(--chip); color: var(--text); border-radius: 999px; font-size: .86rem; font-weight: 650; }
-    .timeline { display: grid; gap: 16px; }
-    .job { padding: 24px; border: 1px solid var(--line); background: var(--surface); border-radius: 20px; box-shadow: var(--shadow); }
+    .timeline {
+      display: grid; gap: 20px; position: relative; padding-left: 26px;
+    }
+    .timeline::before {
+      content: ""; position: absolute; left: 7px; top: 18px; bottom: 24px; width: 2px;
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 60%, var(--line) 100%);
+      border-radius: 999px;
+    }
+    .job {
+      position: relative; padding: 24px; border: 1px solid var(--line); background: var(--surface);
+      border-radius: 20px; box-shadow: var(--shadow);
+    }
+    .job::before {
+      content: ""; position: absolute; left: -26px; top: 26px; width: 12px; height: 12px;
+      border-radius: 50%; background: var(--surface); border: 3px solid var(--accent);
+      box-shadow: 0 0 0 3px var(--bg);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .job:hover::before {
+      transform: scale(1.35); background: var(--accent); border-color: #9ee9df;
+      box-shadow: 0 0 0 5px rgba(37,99,235,.25);
+    }
     .job-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; }
     .job h3 { margin: 0; font-size: 1.17rem; }
     .company { color: var(--accent); font-weight: 750; margin-top: 3px; }
@@ -111,63 +237,308 @@
     .project-link { display: inline-block; margin: 4px 8px 4px 0; }
     footer { border-top: 1px solid var(--line); padding: 24px 0 34px; color: var(--muted); font-size: .9rem; }
     .footer-inner { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    /* ── Scroll-entry reveal ── */
+    @keyframes cv-reveal {
+      from { opacity: 0; translate: 0 28px; }
+    }
+    @media screen and (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: view()) and (animation-range: entry) {
+        .card, .job, .stat, .recognition {
+          animation: cv-reveal 0.55s cubic-bezier(.22,.68,0,1.2) both;
+          animation-timeline: view();
+          animation-range: entry 0% entry 38%;
+        }
+      }
+    }
+
+    /* ── Hero shimmer on the accent radial ── */
+    @keyframes hero-pulse {
+      0%, 100% { opacity: .25; }
+      50%       { opacity: .45; }
+    }
+    .hero:before {
+      content: '';
+      position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+      background: radial-gradient(circle at 15% 80%, rgba(94,234,212,.18), transparent 40%);
+      @media screen and (prefers-reduced-motion: no-preference) {
+        animation: hero-pulse 6s ease-in-out infinite;
+      }
+    }
+
+    /* ── Stat number count-up highlight ── */
+    @keyframes stat-pop {
+      0%   { transform: scale(.85); opacity: 0; }
+      70%  { transform: scale(1.06); }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+    .stat strong {
+      display: block;
+      @media screen and (prefers-reduced-motion: no-preference) {
+        animation: stat-pop .6s cubic-bezier(.34,1.56,.64,1) both;
+        animation-delay: calc(var(--i, 0) * 80ms);
+      }
+    }
+
+    /* ── Card hover lift ── */
+    .card, .job {
+      transition:
+        transform 180ms cubic-bezier(.22,.68,0,1.2),
+        box-shadow 180ms ease,
+        border-color 180ms ease;
+      will-change: transform;
+    }
+    .card:hover, .job:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 56px rgba(23,32,51,.13), 0 0 0 1.5px var(--accent);
+      border-color: var(--accent);
+    }
+    body.dark .card:hover, body.dark .job:hover {
+      box-shadow: 0 20px 56px rgba(0,0,0,.35), 0 0 0 1.5px var(--accent);
+    }
+
+    /* ── Recognition card hover ── */
+    .recognition {
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+    .recognition:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(23,32,51,.12);
+    }
+
+    /* ── Chip hover ── */
+    .chip {
+      transition: background 160ms ease, color 160ms ease, transform 120ms ease;
+      cursor: default;
+    }
+    .chip:hover {
+      background: var(--accent);
+      color: #fff;
+      transform: scale(1.07);
+    }
+    body.dark .chip:hover { color: #0b1220; }
+
+    /* ── Button interactions ── */
+    .button {
+      transition: transform 140ms ease, box-shadow 140ms ease, background 160ms ease, border-color 160ms ease;
+    }
+    .button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(37,99,235,.18);
+    }
+    .button:active { transform: scale(.97); }
+    .button.primary:hover { box-shadow: 0 6px 18px rgba(37,99,235,.35); }
+
+    /* Focus rings */
+    :where(a, button, [tabindex]):focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    /* ── Accent line under section headings ── */
+    h2 {
+      position: relative;
+      display: inline-block;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      height: 3px; width: 2.4em;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      @media screen and (prefers-reduced-motion: no-preference) {
+        transition: width 400ms cubic-bezier(.22,.68,0,1.2);
+      }
+    }
+    .section-heading:hover h2::after { width: 100%; }
+
+    /* ── Scroll progress bar at top ── */
+    @media screen and (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: scroll()) {
+        #scroll-bar {
+          position: fixed; top: 0; left: 0; z-index: 999;
+          height: 3px; width: 100%;
+          background: linear-gradient(90deg, var(--accent), var(--accent-2));
+          transform-origin: left;
+          animation: scroll-grow linear both;
+          animation-timeline: scroll(root);
+        }
+        @keyframes scroll-grow {
+          from { scale: 0 1; }
+          to   { scale: 1 1; }
+        }
+      }
+    }
+
+    /* ── Company name underline on hover ── */
+    .company {
+      display: inline-block;
+      position: relative;
+    }
+    .company::after {
+      content: '';
+      position: absolute; left: 0; bottom: -1px;
+      height: 1.5px; width: 0;
+      background: var(--accent);
+      transition: width 220ms ease;
+      border-radius: 999px;
+    }
+    .job:hover .company::after { width: 100%; }
+
     @media (max-width: 760px) {
       .quick-stats { grid-template-columns: repeat(2, 1fr); }
       .grid-2, .recognitions { grid-template-columns: 1fr; }
       .job-head { display: block; }
       .date { display: block; margin-top: 7px; }
       .two-col-list { grid-template-columns: 1fr; }
-      .topbar { align-items: flex-start; }
+      .topbar { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .timeline { padding-left: 20px; }
+      .timeline::before { left: 4px; }
+      .job::before { left: -20px; width: 10px; height: 10px; top: 22px; }
+      .back-to-top { bottom: 18px; right: 18px; width: 40px; height: 40px; }
     }
     @media print {
-      :root { --bg: #fff; --surface: #fff; --surface-2: #f4f6f8; --text: #111; --muted: #444; --line: #ddd; --accent: #174ea6; --accent-2: #08776d; --chip: #eef3ff; }
-      body { background: #fff; font-size: 10.5pt; }
-      .topbar, .top-actions, .hero-links, .no-print { display: none !important; }
-      .wrap { width: 100%; }
-      .hero { padding: 25px; box-shadow: none; print-color-adjust: exact; }
-      .card, .job, .stat { box-shadow: none; break-inside: avoid; }
-      .section { margin-top: 22px; }
-      a { color: inherit; }
+      *, *::before, *::after {
+        animation: none !important;
+        animation-timeline: none !important;
+        transition: none !important;
+      }
+      .card, .job, .stat, .recognition, article, section, p, ul, li {
+        opacity: 1 !important;
+        transform: none !important;
+        translate: none !important;
+        visibility: visible !important;
+      }
+      :root {
+        --bg: #fff; --surface: #fff; --surface-2: #f4f6fa;
+        --text: #0f172a; --muted: #475569; --line: #d1d9e6;
+        --accent: #1d4ed8; --accent-2: #0f766e;
+        --chip: #eff6ff; --shadow: none;
+      }
+      @page { margin: 0.8cm 1cm; size: A4 portrait; }
+      body { background: #fff; font-size: 8.8pt; line-height: 1.45; }
+      .topbar, .top-actions, .hero-links, .no-print, .back-to-top, .copy-btn, .toast, .typewriter-cursor { display: none !important; }
+      .wrap { width: 100%; max-width: 100%; margin: 0; padding: 0; }
+      .hero {
+        padding: 16px 20px; border-radius: 8px;
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+      }
+      .hero:before, .hero:after { display: none; }
+      h1 { font-size: 17pt; margin: 4px 0 6px; }
+      .eyebrow { font-size: 7pt; }
+      .status-badge {
+        font-size: 7.5pt; padding: 2px 8px; border-radius: 999px;
+        background: #ecfdf5; border: 1px solid #059669; color: #065f46;
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+      }
+      .status-dot {
+        background: #059669; print-color-adjust: exact; -webkit-print-color-adjust: exact;
+      }
+      .hero-type-wrap { display: none; }
+      .hero p { font-size: 8.5pt; line-height: 1.4; }
+      .hero-meta { margin-top: 6px; gap: 4px 14px; font-size: 8pt; }
+      main { padding: 6px 0 16px; }
+      .quick-stats { grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 8px 0 14px; }
+      .stat { padding: 8px 10px; border-radius: 8px; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .stat strong { font-size: 1.1rem; }
+      .stat span { font-size: 0.72rem; }
+      .card, .job, .stat { box-shadow: none; }
+      .job, .recognition { break-inside: avoid; }
+      .grid-2 { gap: 8px; }
+      .card { padding: 10px 14px; border-radius: 8px; }
+      .section { margin-top: 12px; }
+      .section-heading { margin-bottom: 6px; }
+      h2 { font-size: 11pt; }
+      h2::after { display: none; }
+      .timeline { padding-left: 0; gap: 6px; }
+      .timeline::before, .job::before { display: none !important; }
+      .job { padding: 10px 14px; border-radius: 8px; }
+      .job h3 { font-size: 9.8pt; }
+      .job ul { margin-top: 4px; padding-left: 16px; }
+      .job li { margin: 2px 0; font-size: 8.5pt; }
+      .recognitions { gap: 6px; }
+      .recognition { padding: 8px 12px; border-radius: 8px; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .chips { gap: 3px; margin-top: 6px; }
+      .chip { padding: 2px 6px; font-size: 7pt; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .tagline { margin-top: 4px; font-size: 7pt; }
+      a { color: inherit; text-decoration: none; }
+      footer { display: none; }
+
+      .print-only-footer {
+        display: block !important; margin-top: 14px; padding-top: 10px;
+        border-top: 1px dashed #cbd5e1; break-inside: avoid;
+      }
+      .print-qr-card {
+        display: flex; align-items: center; gap: 14px; font-size: 8pt; color: #334155;
+      }
+      .print-qr-card img {
+        width: 56px; height: 56px; border-radius: 4px; flex-shrink: 0;
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+      }
     }
+    .print-only-footer { display: none; }
   </style>
 </head>
 <body>
+  <div id="scroll-bar" aria-hidden="true"></div>
+  <div class="scroll-sentinel" aria-hidden="true"></div>
   <div class="wrap">
     <nav class="topbar" aria-label="Main navigation">
       <a class="brand" href="#top">HES​​HAM AZKOUL</a>
       <div class="top-actions">
         <a class="button" href="#experience">Experience</a>
         <a class="button" href="#skills">Skills</a>
-        <button class="button" id="theme-toggle" type="button" aria-label="Toggle dark mode">☾ Theme</button>
-        <button class="button primary" type="button" onclick="window.print()">Print / Save PDF</button>
+        <a class="button" href="#recognitions">Recognitions</a>
+        <a class="button" href="#education">Education</a>
+        <a class="button" href="#contact">Contact</a>
+        <button class="button" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Shortcut: Press D">☾ Theme <kbd class="no-print">D</kbd></button>
+        <a class="button primary download-cv-action" href="Hesham-Azkoul-CV.pdf" download="Hesham-Muhammed-CV.pdf" title="Save PDF directly (Shortcut: Press S)">💾 Save CV (PDF) <kbd class="no-print" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)">S</kbd></a>
       </div>
     </nav>
 
     <header class="hero" id="top">
-      <div class="eyebrow">Professional Portfolio · Alexandria, Egypt</div>
+      <div class="hero-top-row">
+        <div class="eyebrow">Professional Portfolio · Alexandria, Egypt</div>
+        <div class="status-badge" aria-label="Current status: Employed, open to opportunities" title="Status: Employed at Sutherland, open to new opportunities">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>Employed · Open to Opportunities</span>
+        </div>
+      </div>
+      <div class="hero-type-wrap" aria-label="Focus areas">
+        <span>Focus:</span>
+        <span id="typewriter" class="typewriter" data-words='["Customer Service & Operations", "Team Leadership & Coaching", "KPI Management & RCA", "Process Improvement & Web"]'>Customer Service & Operations</span><span class="typewriter-cursor" aria-hidden="true"></span>
+      </div>
       <h1>Hesham Muhammed<br>Abd El-Latif</h1>
       <p>Customer Service & Operations professional with experience in international customer support, team coaching, performance management, and web development. I focus on understanding problems, supporting people, and turning performance expectations into practical action.</p>
       <div class="hero-meta">
         <span>⌖ Alexandria, Egypt</span>
-        <span>✉ <a href="mailto:heshamazkoul@gmail.com" style="color:inherit">heshamazkoul@gmail.com</a></span>
-        <span>☎ <a href="tel:+201098559170" style="color:inherit">+20 109 855 9170</a></span>
+        <span>✉ <a href="mailto:heshamazkoul@gmail.com" style="color:inherit">heshamazkoul@gmail.com</a>
+          <button class="copy-btn no-print" data-copy="heshamazkoul@gmail.com" type="button" aria-label="Copy email to clipboard" title="Copy email">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </button>
+        </span>
+        <span>☎ <a href="tel:+201098559170" style="color:inherit">+20 109 855 9170</a>
+          <button class="copy-btn no-print" data-copy="+201098559170" type="button" aria-label="Copy phone number to clipboard" title="Copy phone">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </button>
+        </span>
       </div>
       <div class="hero-links">
-        <a class="button primary" href="Hesham-Azkoul-CV.pdf" download>↓ Download CV</a>
+        <a class="button primary download-cv-action" href="Hesham-Azkoul-CV.pdf" download="Hesham-Muhammed-CV.pdf">↓ Save CV (PDF)</a>
         <a class="button" href="https://www.linkedin.com/in/hesham-azkoul/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-        <a class="button" href="https://azkoul.github.io/" target="_blank" rel="noopener noreferrer">Portfolio URL ↗</a>
       </div>
     </header>
 
     <main>
       <section class="quick-stats" aria-label="Career highlights">
-        <div class="stat"><strong>95%</strong><span>Customer satisfaction at Blackwell’s</span></div>
-        <div class="stat"><strong>Top 5</strong><span>Agent ranking from the first month</span></div>
-        <div class="stat"><strong>17</strong><span>Team members supported during temporary TL assignment</span></div>
-        <div class="stat"><strong>4</strong><span>Recognitions at Sutherland</span></div>
+        <div class="stat"><strong data-target="95" data-suffix="%">95%</strong><span>Customer satisfaction at Blackwell’s</span></div>
+        <div class="stat"><strong data-prefix="Top " data-target="5">Top 5</strong><span>Agent ranking from the first month</span></div>
+        <div class="stat"><strong data-target="17">17</strong><span>Team members supported during temporary TL assignment</span></div>
+        <div class="stat"><strong data-target="5">5</strong><span>Recognitions at Sutherland</span></div>
       </section>
 
-      <section class="section" id="profile">
+      <section class="section" id="profile" tabindex="-1">
         <div class="section-heading"><div><h2>Professional Summary</h2><p class="section-note">Customer experience, operational performance, and people development.</p></div></div>
         <div class="grid-2">
           <article class="card">
@@ -190,7 +561,7 @@
         </div>
       </section>
 
-      <section class="section" id="skills">
+      <section class="section" id="skills" tabindex="-1">
         <div class="section-heading"><div><h2>Skills</h2><p class="section-note">Practical skills developed across customer support, operations, and technical projects.</p></div></div>
         <div class="grid-2">
           <article class="card">
@@ -207,27 +578,42 @@
           <article class="card">
             <h3>Technical & Digital</h3>
             <ul>
-              <li>WordPress website development and WooCommerce</li>
-              <li>Website troubleshooting and basic front-end development</li>
+              <li>Front-end web development (HTML5, CSS3, JavaScript) and responsive design</li>
+              <li>WordPress website development, custom theme integration, and WooCommerce</li>
+              <li>Website troubleshooting, performance optimization, and cross-browser usability</li>
               <li>Search evaluation and map content quality analysis</li>
               <li>Discord community moderation, support, channel/role setup, and bots</li>
               <li>Microsoft Outlook and documentation for day-to-day coordination</li>
             </ul>
           </article>
         </div>
+        <article class="card" style="margin-top:18px;">
+          <h3>Tools &amp; Platforms</h3>
+          <div class="chips">
+            <span class="chip">HTML5 / CSS3</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">WordPress / WooCommerce</span>
+            <span class="chip">Zendesk</span>
+            <span class="chip">Slack</span>
+            <span class="chip">Microsoft Teams</span>
+            <span class="chip">Microsoft Outlook</span>
+            <span class="chip">Discord</span>
+          </div>
+        </article>
       </section>
 
-      <section class="section" id="recognitions">
+      <section class="section" id="recognitions" tabindex="-1">
         <div class="section-heading"><div><h2>Recognitions</h2><p class="section-note">Recognition received during my time at Sutherland.</p></div></div>
         <div class="recognitions">
-          <article class="card recognition"><div class="when">March 2026</div><h3>Certificate of Appreciation</h3><p>Recognition received during my time at Sutherland.</p></article>
+          <article class="card recognition"><div class="when">March 2026</div><h3>Certificate of Appreciation</h3><p>Recognized for top performance and consistently achieving overall KPIs as a Customer Service Representative.</p></article>
           <article class="card recognition"><div class="when">May 2026</div><h3>Certificate of Appreciation</h3><p>Recognized for exceptional performance, contributions, and supporting the team in achieving its target while in a temporary leadership role.</p></article>
           <article class="card recognition"><div class="when">May 2026</div><h3>Best Team Leader — Pulse Survey</h3><p>Recognized as the Best Team Leader through the employee pulse survey and received a gift from Sutherland in recognition of this achievement.</p></article>
           <article class="card recognition"><div class="when">July 2026</div><h3>Top SME — UK/IE</h3><p>Recognized as a Top SME while supporting the operation in a temporary Team Leader capacity.</p></article>
+          <article class="card recognition"><div class="when">November 2026</div><h3>Performance Recognition</h3><p>Recognized for performance contributions while serving as a Customer Service Representative on the UK Digital account.</p></article>
         </div>
       </section>
 
-      <section class="section" id="experience">
+      <section class="section" id="experience" tabindex="-1">
         <div class="section-heading"><div><h2>Professional Experience</h2><p class="section-note">Customer operations, leadership, sales, and technical experience.</p></div></div>
         <div class="timeline">
           <article class="job">
@@ -236,6 +622,8 @@
             <ul>
               <li>Support customers and handle service issues in line with account procedures, quality standards, and performance expectations.</li>
               <li>Work with operational metrics, customer needs, and escalation processes in a target-driven environment.</li>
+              <li>Consistently achieving monthly performance targets since returning to the agent role in September 2026.</li>
+              <li>Recognized for performance contributions in November 2026.</li>
             </ul>
             <span class="tagline">UK Digital · Customer Operations</span>
           </article>
@@ -251,8 +639,10 @@
               <li>Coordinated with QA, WFM/RTA, HR, IT, Sales, and other stakeholders to address operational, technical, scheduling, and employee-related issues.</li>
               <li>Supported escalations, urgent management requests, staffing coverage, attendance coordination, and employee engagement.</li>
               <li>Helped agents understand expectations and improve performance through clear feedback, practical guidance, and consistent follow-up.</li>
+              <li>Designed and introduced a <strong>Tardy Tracker</strong> to monitor agent tardiness — adopted account-wide and recognized with a thank-you email from the Account Manager shared across the whole account.</li>
+              <li>Independently studied the client's tool to reverse-engineer the <strong>Chat Workflow metric</strong> (a new KPI with no guidance provided on how to improve it). Developed a clear method, shared it with the team through targeted guidance and follow-up, and brought every agent from the 80% target to <strong>90%+ consistently each month</strong>.</li>
             </ul>
-            <div class="chips"><span class="chip">Performance Management</span><span class="chip">Coaching</span><span class="chip">RCA</span><span class="chip">Action Plans</span><span class="chip">Stakeholder Management</span></div>
+            <div class="chips"><span class="chip">Performance Management</span><span class="chip">Coaching</span><span class="chip">RCA</span><span class="chip">Action Plans</span><span class="chip">Stakeholder Management</span><span class="chip">Process Improvement</span><span class="chip">Initiative</span></div>
           </article>
 
           <article class="job">
@@ -276,32 +666,58 @@
           </article>
 
           <article class="job">
-            <div class="job-head"><div><h3>WordPress Developer</h3><div class="company">Freelance</div></div><div class="date">January 2023 – June 2023 · Remote</div></div>
-            <p>Built and maintained client websites using WordPress, with attention to mobile usability and loading performance.</p>
-            <p><strong>Projects:</strong>
+            <div class="job-head"><div><h3>Web &amp; WordPress Developer</h3><div class="company">Freelance</div></div><div class="date">January 2023 – Present · Remote</div></div>
+            <p>Design, build, and maintain responsive client websites using <strong>HTML5, CSS3, JavaScript, and WordPress</strong>, focusing on fast loading times, clean mobile-first UI, and practical client workflows.</p>
+            <ul>
+              <li><strong>LeadSet (November 2026):</strong> Built and launched a complete website for a real estate agency (<a class="project-link" href="https://leadset.net/" target="_blank" rel="noopener noreferrer">leadset.net ↗</a>), utilizing HTML5, CSS3, JavaScript, and WordPress to deliver structured property showcases, lead capture forms, and mobile optimization.</li>
+              <li>Delivered custom client websites with a focus on cross-device responsiveness, loading speed, and SEO best practices.</li>
+            </ul>
+            <p><strong>Other Projects:</strong>
               <a class="project-link" href="https://gardenhub-eg.com/" target="_blank" rel="noopener noreferrer">GardenHub ↗</a>
               <a class="project-link" href="https://albeitalmasrygroup.com/" target="_blank" rel="noopener noreferrer">Albeit Almasry Group ↗</a>
             </p>
+            <div class="chips">
+              <span class="chip">HTML5</span>
+              <span class="chip">CSS3</span>
+              <span class="chip">JavaScript</span>
+              <span class="chip">WordPress</span>
+              <span class="chip">Responsive Web Design</span>
+            </div>
           </article>
 
           <article class="job">
             <div class="job-head"><div><h3>Cold Caller / Texter</h3><div class="company">Proper Outsource Solutions</div></div><div class="date">March 2023 – June 2023</div></div>
-            <p>Contacted potential property sellers, introduced the opportunity, and assessed their interest in selling.</p>
+            <ul>
+              <li>Contacted potential property sellers through outbound calls and texts to introduce selling opportunities.</li>
+              <li>Assessed seller interest, gathered basic property information, and passed qualified leads to the team.</li>
+            </ul>
           </article>
 
           <article class="job">
             <div class="job-head"><div><h3>Store Manager</h3><div class="company">Ehab Elby Motorcycles</div></div><div class="date">February 2022 – February 2023</div></div>
-            <p>Supported store operations, sales activities, and team performance.</p>
+            <ul>
+              <li>Managed day-to-day store operations including in-store sales, customer service, and inventory restocking.</li>
+              <li>Labelled and documented products on the store management system, maintaining accurate stock records.</li>
+              <li>Supervised and coordinated two junior team members.</li>
+            </ul>
           </article>
 
           <article class="job">
-            <div class="job-head"><div><h3>Frontend Web Developer Intern</h3><div class="company">SMS</div></div><div class="date">April 2021 – January 2022</div></div>
-            <p>Worked on multiple web projects and completed four independent website projects during the internship.</p>
+            <div class="job-head"><div><h3>Web Development & Support Intern</h3><div class="company">SMS (Game Development Agency)</div></div><div class="date">April 2021 – January 2022</div></div>
+            <p>Supported a game development agency across customer support, community management, and website development.</p>
+            <ul>
+              <li>Handled player support through in-game channels and Discord, resolving gameplay, technical, and account issues.</li>
+              <li>Managed and moderated Discord support channels, including channel setup, role assignment, and bot management.</li>
+              <li>Built 3 websites for the company using front-end web technologies. (Sites no longer live as the company has since closed.)</li>
+            </ul>
           </article>
 
           <article class="job">
             <div class="job-head"><div><h3>Telesales Representative</h3><div class="company">POS</div></div><div class="date">January 2021 – March 2021</div></div>
-            <p>Sold medical devices and braces to senior customers in the United States over the phone.</p>
+            <ul>
+              <li>Sold medical devices and braces to senior customers in the United States through outbound calls.</li>
+              <li>Communicated product benefits clearly, addressed customer questions, and guided customers through the purchase process.</li>
+            </ul>
           </article>
 
           <article class="job">
@@ -326,13 +742,14 @@
         </div>
       </section>
 
-      <section class="section" id="education">
+      <section class="section" id="education" tabindex="-1">
         <div class="section-heading"><div><h2>Education & Military Service</h2><p class="section-note">Academic background and completed national service.</p></div></div>
         <div class="grid-2">
           <article class="card">
             <h3>Bachelor’s Degree in Information Technology</h3>
-            <p><strong>Aboukir High Institutes for Information and Computer Science (HICIS)</strong></p>
-            <p>2022</p>
+            <p><strong>High Institute for Computer and Information Systems (HICIS) — Aboukir</strong></p>
+            <p>Graduated 2022 · Grade: Good</p>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:6px;">Broad curriculum covering software development, C++, C#, HTML/CSS/JavaScript, database management, networking, project management, and accounting.</p>
           </article>
           <article class="card">
             <h3>Mandatory Military Service</h3>
@@ -342,36 +759,66 @@
         </div>
       </section>
 
-      <section class="section" id="languages">
+      <section class="section" id="languages" tabindex="-1">
         <div class="section-heading"><div><h2>Languages & Work Preferences</h2></div></div>
         <div class="card">
           <ul class="two-col-list">
             <li><strong>Arabic</strong><br><span style="color:var(--muted)">Native</span></li>
             <li><strong>English</strong><br><span style="color:var(--muted)">Professional working proficiency</span></li>
+            <li><strong>Current status</strong><br><span style="color:var(--muted)">Employed (Sutherland) · Open to new opportunities</span></li>
             <li><strong>Work style</strong><br><span style="color:var(--muted)">Supportive, accountable, and improvement-focused</span></li>
-            <li><strong>Location</strong><br><span style="color:var(--muted)">Alexandria, Egypt</span></li>
+            <li><strong>Location &amp; Mobility</strong><br><span style="color:var(--muted)">Alexandria, Egypt · Open to Remote &amp; On-site</span></li>
           </ul>
         </div>
       </section>
 
-      <section class="section" id="contact">
+      <section class="section" id="contact" tabindex="-1">
         <div class="section-heading"><div><h2>Contact</h2><p class="section-note">Open to relevant opportunities in customer service, operations, team leadership, and technical support.</p></div></div>
         <div class="card">
-          <p><strong>Email:</strong> <a href="mailto:heshamazkoul@gmail.com">heshamazkoul@gmail.com</a></p>
-          <p><strong>Phone:</strong> <a href="tel:+201098559170">+20 109 855 9170</a></p>
-          <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/hesham-azkoul-324221243/" target="_blank" rel="noopener noreferrer">linkedin.com/in/hesham-azkoul</a></p>
+          <p>
+            <strong>Email:</strong> <a href="mailto:heshamazkoul@gmail.com">heshamazkoul@gmail.com</a>
+            <button class="copy-btn no-print" data-copy="heshamazkoul@gmail.com" type="button" aria-label="Copy email to clipboard" title="Copy email">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </p>
+          <p>
+            <strong>Phone:</strong> <a href="tel:+201098559170">+20 109 855 9170</a>
+            <button class="copy-btn no-print" data-copy="+201098559170" type="button" aria-label="Copy phone number to clipboard" title="Copy phone">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </p>
+          <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/hesham-azkoul/" target="_blank" rel="noopener noreferrer">linkedin.com/in/hesham-azkoul</a></p>
         </div>
       </section>
     </main>
 
+    <div class="print-only-footer" aria-hidden="true">
+      <div class="print-qr-card">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=https%3A%2F%2Fazkoul.github.io%2F" alt="QR Code to azkoul.github.io" width="64" height="64" />
+        <div>
+          <strong>Hesham Muhammed Abd El-Latif · Interactive Portfolio</strong><br>
+          <span>Scan with your phone camera to view the live responsive CV, interactive demos & updates at <strong>azkoul.github.io</strong></span>
+        </div>
+      </div>
+    </div>
+
     <footer>
       <div class="footer-inner">
         <span>© <span id="year">2026</span> Hesham Muhammed Abd El-Latif</span>
+        <span class="kbd-legend no-print">Shortcuts: <kbd>D</kbd> Theme · <kbd>S</kbd> Save PDF · <kbd>T</kbd> Top</span>
         <span>Professional portfolio · Built for clarity and accessibility</span>
       </div>
     </footer>
   </div>
+
+  <a href="#top" id="back-to-top" class="back-to-top no-print" aria-label="Back to top" title="Back to top (Press T)">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </a>
+
+  <div id="toast" role="status" aria-live="polite" class="toast"></div>
+
   <script>
+    // ── Theme toggle ──
     const toggle = document.getElementById('theme-toggle');
     const savedTheme = localStorage.getItem('hesham-theme');
     if (savedTheme === 'dark') document.body.classList.add('dark');
@@ -380,6 +827,268 @@
       localStorage.setItem('hesham-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
     });
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ── Stat count-up animation ──
+    const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('.stat').forEach((el, i) => {
+      el.querySelector('strong')?.style.setProperty('--i', i);
+    });
+
+    if (!prefersReducedMotion) {
+      const animateCount = (el) => {
+        const target = parseFloat(el.dataset.target);
+        if (isNaN(target)) return;
+        const prefix = el.dataset.prefix || '';
+        const suffix = el.dataset.suffix || '';
+        const duration = 1200;
+        const start = performance.now();
+        const step = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          // Ease out cubic
+          const ease = 1 - Math.pow(1 - progress, 3);
+          const current = Math.floor(ease * target);
+          el.textContent = `${prefix}${current}${suffix}`;
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = `${prefix}${target}${suffix}`;
+          }
+        };
+        requestAnimationFrame(step);
+      };
+
+      const statObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const strong = entry.target.querySelector('strong[data-target]');
+            if (strong && !strong.dataset.animated) {
+              strong.dataset.animated = 'true';
+              animateCount(strong);
+            }
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      document.querySelectorAll('.stat').forEach(s => statObserver.observe(s));
+    }
+
+    // ── Hero mouse spotlight follower ──
+    const hero = document.querySelector('.hero');
+    if (hero && !prefersReducedMotion) {
+      hero.addEventListener('pointermove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        hero.style.setProperty('--mouse-x', `${x.toFixed(1)}%`);
+        hero.style.setProperty('--mouse-y', `${y.toFixed(1)}%`);
+      });
+    }
+
+    // ── Typewriter effect in hero ──
+    const typewriterEl = document.getElementById('typewriter');
+    if (typewriterEl && !prefersReducedMotion) {
+      const words = JSON.parse(typewriterEl.dataset.words || '[]');
+      let wordIdx = 0;
+      let charIdx = words[0] ? words[0].length : 0;
+      let isDeleting = true;
+
+      const typeLoop = () => {
+        const currentWord = words[wordIdx];
+        if (isDeleting) {
+          typewriterEl.textContent = currentWord.substring(0, charIdx - 1);
+          charIdx--;
+        } else {
+          typewriterEl.textContent = currentWord.substring(0, charIdx + 1);
+          charIdx++;
+        }
+
+        let speed = isDeleting ? 30 : 65;
+
+        if (!isDeleting && charIdx === currentWord.length) {
+          speed = 2200; // Pause at full word
+          isDeleting = true;
+        } else if (isDeleting && charIdx === 0) {
+          isDeleting = false;
+          wordIdx = (wordIdx + 1) % words.length;
+          speed = 400; // Pause before typing new word
+        }
+
+        setTimeout(typeLoop, speed);
+      };
+
+      setTimeout(typeLoop, 2000);
+    }
+
+    // ── Click to copy with toast ──
+    const toast = document.getElementById('toast');
+    let toastTimeout;
+    const showToast = (message) => {
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.classList.remove('show'), 2400);
+    };
+
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const text = btn.dataset.copy;
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+          showToast(`✓ Copied: ${text}`);
+        } catch {
+          showToast(`Failed to copy to clipboard`);
+        }
+      });
+    });
+
+    // ── Scroll position aware Back-to-Top (modern-web-guidance) ──
+    const sentinel = document.querySelector('.scroll-sentinel');
+    if (sentinel) {
+      const backToTopObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            document.body.classList.add('scrolled');
+          } else {
+            document.body.classList.remove('scrolled');
+          }
+        });
+      }, { threshold: 0 });
+      backToTopObserver.observe(sentinel);
+    }
+
+    // ── Scrollspy navigation fallback & aria-current sync (modern-web-guidance) ──
+    const navLinks = document.querySelectorAll('.top-actions a[href^="#"]');
+    const sections = document.querySelectorAll('main section[id]');
+
+    const syncAriaCurrent = () => {
+      const currentLink = document.querySelector('.top-actions a:target-current, .top-actions a.target-current');
+      navLinks.forEach(link => {
+        link.setAttribute('aria-current', link === currentLink ? 'true' : 'false');
+      });
+    };
+
+    if (CSS.supports('scroll-target-group: auto')) {
+      syncAriaCurrent();
+      document.addEventListener('scrollend', syncAriaCurrent);
+    } else {
+      const spyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              const isActive = link.getAttribute('href') === `#${id}`;
+              link.classList.toggle('target-current', isActive);
+              link.setAttribute('aria-current', isActive ? 'true' : 'false');
+            });
+          }
+        });
+      }, { rootMargin: '-35% 0px -40% 0px', threshold: 0 });
+      sections.forEach(s => spyObserver.observe(s));
+    }
+
+    // ── Save CV directly (prompts user where to save, no print dialog) ──
+    const saveCvDirectly = async (e) => {
+      // Modern browsers: File System Access API explicitly prompts "Save As" location dialog
+      if ('showSaveFilePicker' in window) {
+        e.preventDefault();
+        try {
+          const handle = await window.showSaveFilePicker({
+            suggestedName: 'Hesham-Muhammed-CV.pdf',
+            types: [{
+              description: 'PDF Document (*.pdf)',
+              accept: { 'application/pdf': ['.pdf'] }
+            }]
+          });
+          showToast('Saving CV...');
+          const res = await fetch('Hesham-Azkoul-CV.pdf');
+          if (!res.ok) throw new Error('File fetch failed');
+          const blob = await res.blob();
+          const writable = await handle.createWritable();
+          await writable.write(blob);
+          await writable.close();
+          showToast('✓ CV saved successfully!');
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            // Fallback to normal download if picker fails
+            const a = document.createElement('a');
+            a.href = 'Hesham-Azkoul-CV.pdf';
+            a.download = 'Hesham-Muhammed-CV.pdf';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          }
+        }
+      }
+      // If showSaveFilePicker not supported, default <a download> attribute downloads directly without print dialog
+    };
+
+    document.querySelectorAll('.download-cv-action').forEach(btn => {
+      btn.addEventListener('click', saveCvDirectly);
+    });
+
+    // ── Keyboard shortcuts ──
+    window.addEventListener('keydown', (e) => {
+      if (['input', 'textarea'].includes(document.activeElement?.tagName?.toLowerCase())) return;
+      const key = e.key.toLowerCase();
+      if (key === 'd') {
+        e.preventDefault();
+        toggle?.click();
+      } else if (key === 's' && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        document.querySelector('.download-cv-action')?.click();
+      } else if (key === 't') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    // ── Ensure all elements and stats are visible for print / PDF ──
+    window.addEventListener('beforeprint', () => {
+      document.querySelectorAll('.card, .job, .stat, .recognition').forEach(el => {
+        el.classList.add('in-view');
+      });
+      document.querySelectorAll('.stat strong[data-target]').forEach(el => {
+        const prefix = el.dataset.prefix || '';
+        const suffix = el.dataset.suffix || '';
+        el.textContent = `${prefix}${el.dataset.target}${suffix}`;
+      });
+    });
+
+    // ── IntersectionObserver fallback reveal for browsers without scroll-driven animations ──
+    if (
+      !CSS.supports('(animation-timeline: view()) and (animation-range: entry)') &&
+      !prefersReducedMotion
+    ) {
+      const style = document.createElement('style');
+      style.textContent = `
+        @media screen {
+          .card, .job, .stat, .recognition {
+            opacity: 0;
+            translate: 0 28px;
+            transition: opacity .55s cubic-bezier(.22,.68,0,1.2), translate .55s cubic-bezier(.22,.68,0,1.2);
+          }
+          .card.in-view, .job.in-view, .stat.in-view, .recognition.in-view {
+            opacity: 1;
+            translate: 0 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e, idx) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('in-view'), idx * 60);
+            io.unobserve(e.target);
+          }
+        }),
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll('.card, .job, .stat, .recognition').forEach(el => io.observe(el));
+    }
   </script>
 </body>
 </html>
