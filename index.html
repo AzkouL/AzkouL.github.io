@@ -7,6 +7,8 @@
   <meta name="keywords" content="Hesham Muhammed Abd El-Latif, customer service, team leader, operations, coaching, KPI, WordPress, Alexandria, Egypt">
   <meta name="theme-color" content="#101827">
   <title>Hesham Muhammed Abd El-Latif | Professional Portfolio</title>
+  <script src="html2pdf.bundle.min.js"></script>
+  <script>if (typeof html2pdf === 'undefined') document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>')</script>
   <style>
     :root {
       --bg: #f4f7fb;
@@ -478,6 +480,67 @@
       }
     }
     .print-only-footer { display: none; }
+
+    /* ── PDF Direct Export Styling ── */
+    body.pdf-export-mode {
+      background: #ffffff !important;
+      color: #172033 !important;
+    }
+    body.pdf-export-mode * {
+      animation: none !important;
+      animation-timeline: none !important;
+      transition: none !important;
+    }
+    body.pdf-export-mode .topbar,
+    body.pdf-export-mode .back-to-top,
+    body.pdf-export-mode .copy-btn,
+    body.pdf-export-mode #scroll-bar,
+    body.pdf-export-mode .toast,
+    body.pdf-export-mode .hero-links,
+    body.pdf-export-mode .no-print,
+    body.pdf-export-mode footer {
+      display: none !important;
+    }
+    body.pdf-export-mode .wrap {
+      width: 100% !important;
+      max-width: 820px !important;
+      margin: 0 auto !important;
+      padding: 0 !important;
+    }
+    body.pdf-export-mode .hero {
+      border-radius: 12px !important;
+      padding: 24px 28px !important;
+      box-shadow: none !important;
+      background: radial-gradient(circle at 85% 10%, rgba(94,234,212,.25), transparent 28%),
+                  linear-gradient(135deg, #101827 0%, #1d3761 60%, #234d70 100%) !important;
+    }
+    body.pdf-export-mode .hero:before,
+    body.pdf-export-mode .hero:after {
+      display: none !important;
+    }
+    body.pdf-export-mode .card,
+    body.pdf-export-mode .job,
+    body.pdf-export-mode .stat,
+    body.pdf-export-mode .recognition {
+      box-shadow: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      translate: none !important;
+      visibility: visible !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+    body.pdf-export-mode .job {
+      margin-bottom: 12px !important;
+    }
+    body.pdf-export-mode .print-only-footer {
+      display: block !important;
+      margin-top: 18px !important;
+      padding-top: 12px !important;
+      border-top: 1px dashed #cbd5e1 !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
   </style>
 </head>
 <body>
@@ -493,7 +556,7 @@
         <a class="button" href="#education">Education</a>
         <a class="button" href="#contact">Contact</a>
         <button class="button" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Shortcut: Press D">☾ Theme <kbd class="no-print">D</kbd></button>
-        <a class="button primary download-cv-action" href="Hesham-Azkoul-CV.pdf" download="Hesham-Muhammed-CV.pdf" title="Save PDF directly (Shortcut: Press S)">💾 Save CV (PDF) <kbd class="no-print" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)">S</kbd></a>
+        <button class="button primary download-pdf-trigger" type="button" title="Download CV as PDF (Shortcut: Press S)">💾 Download CV (PDF) <kbd class="no-print" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)">S</kbd></button>
       </div>
     </nav>
 
@@ -525,7 +588,7 @@
         </span>
       </div>
       <div class="hero-links">
-        <a class="button primary download-cv-action" href="Hesham-Azkoul-CV.pdf" download="Hesham-Muhammed-CV.pdf">↓ Save CV (PDF)</a>
+        <button class="button primary download-pdf-trigger" type="button">↓ Download CV (PDF)</button>
         <a class="button" href="https://www.linkedin.com/in/hesham-azkoul/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
     </header>
@@ -989,44 +1052,66 @@
       sections.forEach(s => spyObserver.observe(s));
     }
 
-    // ── Save CV directly (prompts user where to save, no print dialog) ──
-    const saveCvDirectly = async (e) => {
-      // Modern browsers: File System Access API explicitly prompts "Save As" location dialog
-      if ('showSaveFilePicker' in window) {
-        e.preventDefault();
-        try {
-          const handle = await window.showSaveFilePicker({
-            suggestedName: 'Hesham-Muhammed-CV.pdf',
-            types: [{
-              description: 'PDF Document (*.pdf)',
-              accept: { 'application/pdf': ['.pdf'] }
-            }]
-          });
-          showToast('Saving CV...');
-          const res = await fetch('Hesham-Azkoul-CV.pdf');
-          if (!res.ok) throw new Error('File fetch failed');
-          const blob = await res.blob();
-          const writable = await handle.createWritable();
-          await writable.write(blob);
-          await writable.close();
-          showToast('✓ CV saved successfully!');
-        } catch (err) {
-          if (err.name !== 'AbortError') {
-            // Fallback to normal download if picker fails
-            const a = document.createElement('a');
-            a.href = 'Hesham-Azkoul-CV.pdf';
-            a.download = 'Hesham-Muhammed-CV.pdf';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-          }
-        }
-      }
-      // If showSaveFilePicker not supported, default <a download> attribute downloads directly without print dialog
-    };
+    // ── Direct Browser PDF Export using html2pdf ──
+    async function generateAndDownloadPdf() {
+      showToast('Generating PDF, please wait...');
 
-    document.querySelectorAll('.download-cv-action').forEach(btn => {
-      btn.addEventListener('click', saveCvDirectly);
+      // Ensure all stats show full final values
+      document.querySelectorAll('.stat strong[data-target]').forEach(el => {
+        const prefix = el.dataset.prefix || '';
+        const suffix = el.dataset.suffix || '';
+        el.textContent = `${prefix}${el.dataset.target}${suffix}`;
+      });
+
+      // Ensure all elements are marked in-view
+      document.querySelectorAll('.card, .job, .stat, .recognition').forEach(el => {
+        el.classList.add('in-view');
+      });
+
+      const element = document.querySelector('.wrap');
+      document.body.classList.add('pdf-export-mode');
+
+      const opt = {
+        margin: [8, 8, 8, 8],
+        filename: 'Hesham-Muhammed-Abd-El-Latif-CV.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          scrollY: 0,
+          windowWidth: 840
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait'
+        },
+        pagebreak: {
+          mode: ['avoid-all', 'css', 'legacy']
+        }
+      };
+
+      try {
+        if (typeof html2pdf !== 'undefined') {
+          await html2pdf().set(opt).from(element).save();
+          showToast('✓ CV PDF downloaded successfully!');
+        } else {
+          window.print();
+        }
+      } catch (err) {
+        console.error('PDF generation error:', err);
+        window.print();
+      } finally {
+        document.body.classList.remove('pdf-export-mode');
+      }
+    }
+
+    document.querySelectorAll('.download-pdf-trigger').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        generateAndDownloadPdf();
+      });
     });
 
     // ── Keyboard shortcuts ──
@@ -1038,7 +1123,7 @@
         toggle?.click();
       } else if (key === 's' && !e.ctrlKey && !e.metaKey) {
         e.preventDefault();
-        document.querySelector('.download-cv-action')?.click();
+        document.querySelector('.download-pdf-trigger')?.click();
       } else if (key === 't') {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
