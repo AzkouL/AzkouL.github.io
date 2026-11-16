@@ -7,8 +7,6 @@
   <meta name="keywords" content="Hesham Muhammed Abd El-Latif, customer service, team leader, operations, coaching, KPI, WordPress, Alexandria, Egypt">
   <meta name="theme-color" content="#101827">
   <title>Hesham Muhammed Abd El-Latif | Professional Portfolio</title>
-  <script src="html2pdf.bundle.min.js"></script>
-  <script>if (typeof html2pdf === 'undefined') document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>')</script>
   <style>
     :root {
       --bg: #f4f7fb;
@@ -556,7 +554,7 @@
         <a class="button" href="#education">Education</a>
         <a class="button" href="#contact">Contact</a>
         <button class="button" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Shortcut: Press D">☾ Theme <kbd class="no-print">D</kbd></button>
-        <button class="button primary download-pdf-trigger" type="button" title="Download CV as PDF (Shortcut: Press S)">💾 Download CV (PDF) <kbd class="no-print" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)">S</kbd></button>
+        <a class="button primary" href="Hesham-Azkoul-CV.pdf" download="Hesham-Azkoul-CV.pdf" id="download-cv-btn" title="Download CV (Shortcut: Press S)">💾 Download CV (PDF) <kbd class="no-print" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)">S</kbd></a>
       </div>
     </nav>
 
@@ -588,7 +586,7 @@
         </span>
       </div>
       <div class="hero-links">
-        <button class="button primary download-pdf-trigger" type="button">↓ Download CV (PDF)</button>
+        <a class="button primary" href="Hesham-Azkoul-CV.pdf" download="Hesham-Azkoul-CV.pdf">↓ Download CV (PDF)</a>
         <a class="button" href="https://www.linkedin.com/in/hesham-azkoul/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
     </header>
@@ -1052,65 +1050,10 @@
       sections.forEach(s => spyObserver.observe(s));
     }
 
-    // ── Direct Browser PDF Export using html2pdf ──
-    async function generateAndDownloadPdf() {
-      showToast('Generating PDF, please wait...');
-
-      // Ensure all stats show full final values
-      document.querySelectorAll('.stat strong[data-target]').forEach(el => {
-        const prefix = el.dataset.prefix || '';
-        const suffix = el.dataset.suffix || '';
-        el.textContent = `${prefix}${el.dataset.target}${suffix}`;
-      });
-
-      // Ensure all elements are marked in-view
-      document.querySelectorAll('.card, .job, .stat, .recognition').forEach(el => {
-        el.classList.add('in-view');
-      });
-
-      const element = document.querySelector('.wrap');
-      document.body.classList.add('pdf-export-mode');
-
-      const opt = {
-        margin: [8, 8, 8, 8],
-        filename: 'Hesham-Muhammed-Abd-El-Latif-CV.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          logging: false,
-          scrollY: 0,
-          windowWidth: 840
-        },
-        jsPDF: {
-          unit: 'mm',
-          format: 'a4',
-          orientation: 'portrait'
-        },
-        pagebreak: {
-          mode: ['avoid-all', 'css', 'legacy']
-        }
-      };
-
-      try {
-        if (typeof html2pdf !== 'undefined') {
-          await html2pdf().set(opt).from(element).save();
-          showToast('✓ CV PDF downloaded successfully!');
-        } else {
-          window.print();
-        }
-      } catch (err) {
-        console.error('PDF generation error:', err);
-        window.print();
-      } finally {
-        document.body.classList.remove('pdf-export-mode');
-      }
-    }
-
-    document.querySelectorAll('.download-pdf-trigger').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        generateAndDownloadPdf();
+    // ── Download CV handler ──
+    document.querySelectorAll('#download-cv-btn, .hero-links a[download]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        showToast('✓ Downloading Hesham-Azkoul-CV.pdf...');
       });
     });
 
@@ -1123,7 +1066,7 @@
         toggle?.click();
       } else if (key === 's' && !e.ctrlKey && !e.metaKey) {
         e.preventDefault();
-        document.querySelector('.download-pdf-trigger')?.click();
+        document.getElementById('download-cv-btn')?.click();
       } else if (key === 't') {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
